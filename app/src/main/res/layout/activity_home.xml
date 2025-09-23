@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -69,8 +70,63 @@
         </LinearLayout>
         <!-- Profile and Greeting Section -->
 
+        <!-- My home  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_height="wrap_content">
 
-        <!-- Content area for future additions -->
+            <!-- Teks "My home" di sebelah kiri -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="My home"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="start|center_vertical" />
+
+            <!-- Tombol dengan ikon plus dan teks -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/home_button_background"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <!-- Ikon plus -->
+                <TextView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:text="+"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@drawable/home_plus_icon_background"
+                    android:layout_marginEnd="8dp" />
+
+                <!-- Teks tombol -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hubungkan"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- My home  -->
+
+
+        <!-- main content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -78,8 +134,9 @@
             android:background="#9999DD"
             android:orientation="vertical">
 
-            <!-- Add your content here -->
 
         </LinearLayout>
+        <!-- main content -->
+
     </LinearLayout>
 </FrameLayout>

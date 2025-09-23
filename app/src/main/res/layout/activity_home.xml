@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:background="#FFBABA"
             android:paddingTop="16dp"
             android:paddingBottom="24dp">
 
@@ -75,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
+            android:background="#FFFE81"
             android:layout_height="wrap_content">
 
             <!-- Teks "My home" di sebelah kiri -->
@@ -134,9 +136,253 @@
             android:background="#9999DD"
             android:orientation="vertical">
 
+            <!-- Baris pertama -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
 
+                <!-- Card 1: Informasi Lampu -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_card_background_lampu"
+                    android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:clipToOutline="true"
+                    android:focusable="true">
+
+                    <!-- Lingkaran dekorasi -->
+                    <View
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="-30dp"
+                        android:layout_marginLeft="70dp"
+                        android:background="@drawable/home_circle_background_lampu" />
+
+                    <ImageView
+                        android:layout_width="111dp"
+                        android:layout_height="111dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="80dp"
+                        android:background="@drawable/lampu_img"
+                        android:contentDescription="Ikon lampu" />
+
+
+                    <!-- Konten utama -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="10dp">
+
+                        <!-- Judul -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Informasi"
+                            android:textColor="#333333"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="90dp"
+                            android:layout_marginBottom="4dp" />
+
+                        <!-- Deskripsi -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Control lampu"
+                            android:textColor="#666666"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="2dp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Card 2: Informasi Temperatur -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_card_background_suhu"
+                    android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:clipToOutline="true">
+
+                    <!-- Lingkaran dekorasi -->
+                    <View
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="-30dp"
+                        android:layout_marginLeft="70dp"
+                        android:background="@drawable/home_circle_background_suhu" />
+
+                    <ImageView
+                        android:layout_width="113dp"
+                        android:layout_height="103dp"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/rumha_img"
+                        android:contentDescription="Ikon temperatur rumah" />
+
+                    <!-- Konten utama -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="10dp">
+
+
+                        <!-- Judul -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Informasi"
+                            android:textColor="#333333"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="90dp"
+                            android:layout_marginBottom="4dp" />
+
+                        <!-- Deskripsi -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monitorig suhu"
+                            android:textColor="#666666"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="2dp" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <!-- Baris kedua -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Card 3: Informasi Air Tandon -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_card_background_tandon_air"
+                    android:layout_marginEnd="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:clipToOutline="true">
+
+                    <!-- Lingkaran dekorasi -->
+                    <View
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="-30dp"
+                        android:layout_marginLeft="70dp"
+                        android:background="@drawable/home_circle_background_tandon_air" />
+
+                    <ImageView
+                        android:layout_width="89dp"
+                        android:layout_height="89dp"
+                        android:layout_marginLeft="90dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/toren_img"
+                        android:contentDescription="Ikon tandon air" />
+                    <!-- Konten utama -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="10dp">
+
+                        <!-- Judul -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Informasi"
+                            android:textColor="#333333"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="90dp"
+                            android:layout_marginBottom="4dp" />
+
+                        <!-- Deskripsi -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Monitoring ketinggian air"
+                            android:textColor="#666666"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="2dp" />
+                    </LinearLayout>
+                </FrameLayout>
+
+                <!-- Card 4: Informasi Solar Panel -->
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="160dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/home_card_background_panel_surya"
+                    android:layout_marginStart="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:clipToOutline="true">
+
+                    <!-- Lingkaran dekorasi -->
+                    <View
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="-30dp"
+                        android:layout_marginLeft="70dp"
+                        android:background="@drawable/home_circle_background_panel_surya" />
+
+
+                    <ImageView
+                        android:layout_width="102dp"
+                        android:layout_height="102dp"
+                        android:layout_marginLeft="84dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/panel_surya_img"
+                        android:contentDescription="Ikon solar panel" />
+                    <!-- Konten utama -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginEnd="10dp">
+
+                        <!-- Judul -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Informasi"
+                            android:textColor="#333333"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="90dp"
+                            android:layout_marginBottom="4dp" />
+
+                        <!-- Deskripsi -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Penggunaan energi listrik"
+                            android:textColor="#666666"
+                            android:textSize="13sp"
+                            android:lineSpacingExtra="2dp" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
         </LinearLayout>
         <!-- main content -->
+
+
 
     </LinearLayout>
 </FrameLayout>

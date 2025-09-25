@@ -142,6 +142,7 @@
 
                 <!-- Card 1: Informasi Lampu -->
                 <FrameLayout
+                    android:id="@+id/cardLampu"
                     android:layout_width="0dp"
                     android:layout_height="140dp"
                     android:layout_weight="1"

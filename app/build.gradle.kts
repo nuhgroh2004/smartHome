@@ -7,6 +7,10 @@ android {
     namespace = "com.example.smarthome"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.smarthome"
         minSdk = 24

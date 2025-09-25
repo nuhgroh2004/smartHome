@@ -201,6 +201,7 @@
 
                 <!-- Card 2: Informasi Temperatur -->
                 <FrameLayout
+                    android:id="@+id/cardMonitoringRuangan"
                     android:layout_width="0dp"
                     android:layout_height="140dp"
                     android:layout_weight="1"

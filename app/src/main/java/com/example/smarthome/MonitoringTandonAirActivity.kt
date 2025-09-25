@@ -18,7 +18,6 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMonitoringTandonAirBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMonitoringTandonAirBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()

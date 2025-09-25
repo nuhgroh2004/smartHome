@@ -34,5 +34,11 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, MonitoringTandonAirActivity::class.java)
             startActivity(intent)
         }
+
+        // Setup click listener for card_monitoring_ruangan to navigate to MonitoringRuanganActivity
+        binding.cardMonitoringRuangan.setOnClickListener {
+            val intent = Intent(this, MonitoringRuanganActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

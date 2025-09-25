@@ -1,7 +1,9 @@
 package com.example.smarthome
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -29,76 +31,76 @@ class ControlLampuActivity : AppCompatActivity() {
 
         // Semua ruangan
         findViewById<LinearLayout>(R.id.toggle_semua_ruangan).setOnClickListener {
-            toggleLamp(R.id.lampu_semua_ruangan, R.id.toggle_semua_ruangan)
+            toggleLampWithAnimation(R.id.lampu_semua_ruangan, R.id.toggle_semua_ruangan)
         }
 
         // Ruang tamu
         findViewById<LinearLayout>(R.id.toggle_ruang_tamu).setOnClickListener {
-            toggleLamp(R.id.lampu_ruang_tamu, R.id.toggle_ruang_tamu)
+            toggleLampWithAnimation(R.id.lampu_ruang_tamu, R.id.toggle_ruang_tamu)
         }
 
         // Ruang keluarga 1
         findViewById<LinearLayout>(R.id.toggle_ruang_keluarga_1).setOnClickListener {
-            toggleLamp(R.id.lampu_ruang_keluarga_1, R.id.toggle_ruang_keluarga_1)
+            toggleLampWithAnimation(R.id.lampu_ruang_keluarga_1, R.id.toggle_ruang_keluarga_1)
         }
 
         // Ruang keluarga 2
         findViewById<LinearLayout>(R.id.toggle_ruang_keluarga_2).setOnClickListener {
-            toggleLamp(R.id.lampu_ruang_keluarga_2, R.id.toggle_ruang_keluarga_2)
+            toggleLampWithAnimation(R.id.lampu_ruang_keluarga_2, R.id.toggle_ruang_keluarga_2)
         }
 
         // Kamar 1
         findViewById<LinearLayout>(R.id.toggle_kamar_1).setOnClickListener {
-            toggleLamp(R.id.lampu_kamar_1, R.id.toggle_kamar_1)
+            toggleLampWithAnimation(R.id.lampu_kamar_1, R.id.toggle_kamar_1)
         }
 
         // Kamar 2
         findViewById<LinearLayout>(R.id.toggle_kamar_2).setOnClickListener {
-            toggleLamp(R.id.lampu_kamar_2, R.id.toggle_kamar_2)
+            toggleLampWithAnimation(R.id.lampu_kamar_2, R.id.toggle_kamar_2)
         }
 
         // Kamar 3
         findViewById<LinearLayout>(R.id.toggle_kamar_3).setOnClickListener {
-            toggleLamp(R.id.lampu_kamar_3, R.id.toggle_kamar_3)
+            toggleLampWithAnimation(R.id.lampu_kamar_3, R.id.toggle_kamar_3)
         }
 
         // Kamar mandi
         findViewById<LinearLayout>(R.id.toggle_kamar_mandi).setOnClickListener {
-            toggleLamp(R.id.lampu_kamar_mandi, R.id.toggle_kamar_mandi)
+            toggleLampWithAnimation(R.id.lampu_kamar_mandi, R.id.toggle_kamar_mandi)
         }
 
         // Dapur
         findViewById<LinearLayout>(R.id.toggle_dapur).setOnClickListener {
-            toggleLamp(R.id.lampu_dapur, R.id.toggle_dapur)
+            toggleLampWithAnimation(R.id.lampu_dapur, R.id.toggle_dapur)
         }
 
         // Tangga
         findViewById<LinearLayout>(R.id.toggle_tangga).setOnClickListener {
-            toggleLamp(R.id.lampu_tangga, R.id.toggle_tangga)
+            toggleLampWithAnimation(R.id.lampu_tangga, R.id.toggle_tangga)
         }
 
         // Ruang makan
         findViewById<LinearLayout>(R.id.toggle_ruang_makan).setOnClickListener {
-            toggleLamp(R.id.lampu_ruang_makan, R.id.toggle_ruang_makan)
+            toggleLampWithAnimation(R.id.lampu_ruang_makan, R.id.toggle_ruang_makan)
         }
 
         // Smoking area
         findViewById<LinearLayout>(R.id.toggle_smoking_area).setOnClickListener {
-            toggleLamp(R.id.lampu_smoking_area, R.id.toggle_smoking_area)
+            toggleLampWithAnimation(R.id.lampu_smoking_area, R.id.toggle_smoking_area)
         }
 
         // Teras
         findViewById<LinearLayout>(R.id.toggle_teras).setOnClickListener {
-            toggleLamp(R.id.lampu_teras, R.id.toggle_teras)
+            toggleLampWithAnimation(R.id.lampu_teras, R.id.toggle_teras)
         }
 
         // Jemuran
         findViewById<LinearLayout>(R.id.toggle_jemuran).setOnClickListener {
-            toggleLamp(R.id.lampu_jemuran, R.id.toggle_jemuran)
+            toggleLampWithAnimation(R.id.lampu_jemuran, R.id.toggle_jemuran)
         }
     }
 
-    private fun toggleLamp(lampContainerId: Int, toggleId: Int) {
+    private fun toggleLampWithAnimation(lampContainerId: Int, toggleId: Int) {
         val lampContainer = findViewById<LinearLayout>(lampContainerId)
         val toggleSwitch = findViewById<LinearLayout>(toggleId)
 
@@ -110,7 +112,7 @@ class ControlLampuActivity : AppCompatActivity() {
             val child = toggleSwitch.getChildAt(i)
             if (child is TextView) {
                 toggleText = child
-            } else if (child is View && child !is TextView) {
+            } else {
                 toggleThumb = child
             }
         }
@@ -122,42 +124,137 @@ class ControlLampuActivity : AppCompatActivity() {
         // Cek current state berdasarkan text toggle
         val isCurrentlyOn = toggleText.text.toString().equals("On", ignoreCase = true)
 
+        // Disable toggle sementara untuk mencegah double click
+        toggleSwitch.isEnabled = false
+
         if (isCurrentlyOn) {
-            // Ubah dari ON ke OFF
-            // 1. Background container lampu
-            lampContainer.setBackgroundResource(R.drawable.bg_off)
-
-            // 2. Background toggle switch
-            toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_off)
-
-            // 3. Text toggle
-            toggleText.text = "Off"
-            toggleText.setTextColor(resources.getColor(android.R.color.white, null))
-
-            // 4. Toggle thumb (posisi bawah untuk OFF)
-            toggleThumb.setBackgroundResource(R.drawable.toggle_thumb_on)
-
-            // 5. Update warna text pada container
-            updateContainerTextColors(lampContainer, false)
-
+            // Ubah dari ON ke OFF dengan animasi
+            animateToggleToOff(lampContainer, toggleSwitch, toggleText, toggleThumb)
         } else {
-            // Ubah dari OFF ke ON
-            // 1. Background container lampu
-            lampContainer.setBackgroundResource(R.drawable.bg_on)
-
-            // 2. Background toggle switch
-            toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_on)
-
-            // 3. Text toggle
-            toggleText.text = "On"
-            toggleText.setTextColor(resources.getColor(android.R.color.white, null))
-
-            // 4. Toggle thumb (posisi atas untuk ON)
-            toggleThumb.setBackgroundResource(R.drawable.toggle_thumb_off)
-
-            // 5. Update warna text pada container
-            updateContainerTextColors(lampContainer, true)
+            // Ubah dari OFF ke ON dengan animasi
+            animateToggleToOn(lampContainer, toggleSwitch, toggleText, toggleThumb)
         }
+    }
+
+    private fun animateToggleToOff(
+        lampContainer: LinearLayout,
+        toggleSwitch: LinearLayout,
+        toggleText: TextView,
+        toggleThumb: View
+    ) {
+        // Disable toggle untuk mencegah double click
+        toggleSwitch.isEnabled = false
+
+        // Simple slide animation - thumb bergerak turun (ON ke OFF)
+        val slideAnimator = ObjectAnimator.ofFloat(toggleThumb, "translationY", 0f, -90f)
+        slideAnimator.duration = 600
+        slideAnimator.interpolator = DecelerateInterpolator()
+
+        slideAnimator.addListener(object : android.animation.AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: android.animation.Animator) {
+                // Reset translation
+                toggleThumb.translationY = 0f
+
+                // Update backgrounds
+                lampContainer.setBackgroundResource(R.drawable.bg_off)
+                toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_off)
+
+                // Reorder children - untuk OFF: View dulu, TextView kedua
+                toggleSwitch.removeAllViews()
+
+                // Buat ulang View untuk OFF state (di bawah)
+                val newThumbView = View(this@ControlLampuActivity)
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    25.dpToPx()
+                )
+                layoutParams.setMargins(0, 0, 0, 4.dpToPx())
+                newThumbView.layoutParams = layoutParams
+                newThumbView.setBackgroundResource(R.drawable.toggle_thumb_off)
+
+                // Update TextView
+                toggleText.text = "Off"
+                toggleText.setTextColor(resources.getColor(android.R.color.white, null))
+                val textLayoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    1f
+                )
+                toggleText.layoutParams = textLayoutParams
+
+                // Add views in OFF order: View first (di bawah), TextView second (di atas)
+                toggleSwitch.addView(newThumbView)
+                toggleSwitch.addView(toggleText)
+
+                updateContainerTextColors(lampContainer, false)
+                toggleSwitch.isEnabled = true
+            }
+        })
+
+        slideAnimator.start()
+    }
+
+    private fun animateToggleToOn(
+        lampContainer: LinearLayout,
+        toggleSwitch: LinearLayout,
+        toggleText: TextView,
+        toggleThumb: View
+    ) {
+        // Disable toggle untuk mencegah double click
+        toggleSwitch.isEnabled = false
+
+        // Simple slide animation - thumb bergerak naik (OFF ke ON)
+        val slideAnimator = ObjectAnimator.ofFloat(toggleThumb, "translationY", 0f, 90f)
+        slideAnimator.duration = 600
+        slideAnimator.interpolator = DecelerateInterpolator()
+
+        slideAnimator.addListener(object : android.animation.AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: android.animation.Animator) {
+                // Reset translation
+                toggleThumb.translationY = 0f
+
+                // Update backgrounds
+                lampContainer.setBackgroundResource(R.drawable.bg_on)
+                toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_on)
+
+                // Reorder children - untuk ON: TextView dulu, View kedua
+                toggleSwitch.removeAllViews()
+
+                // Update TextView
+                toggleText.text = "On"
+                toggleText.setTextColor(resources.getColor(android.R.color.white, null))
+                val textLayoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    1f
+                )
+                toggleText.layoutParams = textLayoutParams
+
+                // Buat ulang View untuk ON state (di atas)
+                val newThumbView = View(this@ControlLampuActivity)
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    25.dpToPx()
+                )
+                layoutParams.setMargins(0, 0, 0, 4.dpToPx())
+                newThumbView.layoutParams = layoutParams
+                newThumbView.setBackgroundResource(R.drawable.toggle_thumb_on)
+
+                // Add views in ON order: TextView first (di atas), View second (di bawah)
+                toggleSwitch.addView(toggleText)
+                toggleSwitch.addView(newThumbView)
+
+                updateContainerTextColors(lampContainer, true)
+                toggleSwitch.isEnabled = true
+            }
+        })
+
+        slideAnimator.start()
+    }
+
+    // Helper function to convert dp to pixels
+    private fun Int.dpToPx(): Int {
+        return (this * resources.displayMetrics.density).toInt()
     }
 
     private fun updateContainerTextColors(lampContainer: LinearLayout, isOn: Boolean) {

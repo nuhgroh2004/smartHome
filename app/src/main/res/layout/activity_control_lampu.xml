@@ -66,13 +66,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Lampu Semua ruangan - ON -->
+            <!-- Lampu semua ruangan -->
             <LinearLayout
                 android:id="@+id/lampu_semua_ruangan"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal"
-                android:background="@drawable/bg_on"
+                android:background="@drawable/bg_off"
                 android:padding="16dp"
                 android:layout_marginBottom="12dp"
                 android:gravity="center_vertical"
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Lampu"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#000000"
                         android:textStyle="bold"
                         android:textSize="24sp"
                         android:fontFamily="sans-serif-medium" />
@@ -97,8 +97,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Semua ruangan"
-                        android:textColor="#E3F2FD"
+                        android:text="Semua tamu"
+                        android:textColor="#000000"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -113,7 +113,7 @@
                         android:id="@+id/toggle_semua_ruangan"
                         android:layout_width="50dp"
                         android:layout_height="70dp"
-                        android:background="@drawable/toggle_bg_on"
+                        android:background="@drawable/toggle_bg_off"
                         android:orientation="vertical"
                         android:padding="5dp"
                         android:clickable="true"
@@ -129,7 +129,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:text="On"
+                            android:text="Off"
                             android:textColor="#FFFFFF"
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
@@ -137,8 +137,7 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-            <!-- Lampu semu ruangan -->
-
+            <!-- Lampu Ruang Tamu - OFF -->
 
             <!-- Lampu ruang tamu -->
             <LinearLayout
@@ -193,7 +192,11 @@
                         android:clickable="true"
                         android:focusable="true">
 
-
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -204,11 +207,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -267,6 +265,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -276,11 +280,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -338,6 +337,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -347,11 +352,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -409,6 +409,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -418,11 +424,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -480,6 +481,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -489,11 +496,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -551,6 +553,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -560,11 +568,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -622,6 +625,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -631,11 +640,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -693,6 +697,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -702,11 +712,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -764,6 +769,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -773,11 +784,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -835,6 +841,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -844,11 +856,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -906,6 +913,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -915,11 +928,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -977,6 +985,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -986,11 +1000,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -1048,6 +1057,12 @@
                         android:clickable="true"
                         android:focusable="true">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/toggle_thumb_off" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -1057,11 +1072,6 @@
                             android:textSize="12sp"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="center" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="25dp"
-                            android:background="@drawable/toggle_thumb_on" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -28,5 +28,11 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, ControlLampuActivity::class.java)
             startActivity(intent)
         }
+
+        // Setup click listener for card_tandon_air to navigate to MonitoringTandonAirActivity
+        binding.cardTandonAir.setOnClickListener {
+            val intent = Intent(this, MonitoringTandonAirActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -16,8 +16,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_margin="20dp"
-        android:background="#EFEFEF"
-        >
+        android:background="#EFEFEF">
 
         <ImageView
             android:id="@+id/btn_back"
@@ -55,6 +54,7 @@
             android:fontFamily="sans-serif-medium" />
     </LinearLayout>
 
+    <!-- Container untuk RecyclerView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,120 +62,21 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="20dp"
-        android:background="@drawable/notification_background"
-        >
+        android:background="@drawable/notification_background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#FFFFFF"
+            android:padding="8dp">
 
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <View
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/notification_toren_air_img" />
-
-                <!-- Container untuk teks -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="8dp">
-
-                    <!-- Judul -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tandon air"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#000000"
-                        android:layout_marginBottom="4dp" />
-
-                    <!-- Subtitle -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tandon air sudah penuh"
-                        android:textSize="14sp"
-                        android:textColor="#666666" />
-                </LinearLayout>
-
-                <!-- Timestamp -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="16 sep"
-                    android:textSize="15sp"
-                    android:textColor="#999999"
-                    android:layout_gravity="top" />
-            </LinearLayout>
-
-
-            <LinearLayout
+            <!-- RecyclerView untuk menampilkan list notifikasi -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_notifications"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#FFFFFF"
-
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <View
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/notification_asap_img" />
-
-                    <!-- Container untuk teks -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="8dp">
-
-                        <!-- Judul -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Penging"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="#000000"
-                            android:layout_marginBottom="4dp" />
-
-                        <!-- Subtitle -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Asap terdeteksi, berponteri kebaran"
-                            android:textSize="14sp"
-                            android:textColor="#666666" />
-                    </LinearLayout>
-
-                    <!-- Timestamp -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="16 sep"
-                        android:textSize="15sp"
-                        android:textColor="#999999"
-                        android:layout_gravity="top" />
-                </LinearLayout>
-            </LinearLayout>
+                tools:listitem="@layout/item_notification" />
 
         </LinearLayout>
 

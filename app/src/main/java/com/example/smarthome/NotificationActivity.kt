@@ -1,5 +1,6 @@
 package com.example.smarthome
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -7,19 +8,22 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.smarthome.databinding.ActivityMonitoringTandonAirBinding
+import com.example.smarthome.databinding.ActivityNotificationBinding
 import com.example.smarthome.model.NotificationModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NotificationActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityNotificationBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var notificationAdapter: NotificationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityNotificationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_notification)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -31,6 +35,12 @@ class NotificationActivity : AppCompatActivity() {
         // Setup back button
         findViewById<android.widget.ImageView>(R.id.btn_back).setOnClickListener {
             finish()
+        }
+
+
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
         }
     }
 

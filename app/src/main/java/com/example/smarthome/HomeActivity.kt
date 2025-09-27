@@ -40,5 +40,11 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, MonitoringRuanganActivity::class.java)
             startActivity(intent)
         }
+
+        // Setup click listener for notification bell to navigate to NotificationActivity
+        binding.notificationBell.setOnClickListener {
+            val intent = Intent(this, NotificationActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

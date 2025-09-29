@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Main bubble rectangle -->
+    <item android:bottom="8dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#0054FF" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <!-- Bubble tail (triangle pointing down) -->
+    <item
+        android:gravity="bottom|center_horizontal"
+        android:bottom="0dp"
+        android:left="0dp"
+        android:right="0dp">
+        <vector
+            android:width="16dp"
+            android:height="8dp"
+            android:viewportWidth="16"
+            android:viewportHeight="8">
+            <path
+                android:fillColor="#0054FF"
+                android:pathData="M8,8 L0,0 L16,0 Z" />
+        </vector>
+    </item>
+</layer-list>

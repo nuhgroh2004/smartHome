@@ -23,28 +23,27 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        // Setup click listener for card_lampu to navigate to ControlLampuActivity
+        /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
         binding.cardLampu.setOnClickListener {
             val intent = Intent(this, ControlLampuActivity::class.java)
             startActivity(intent)
         }
-
-        // Setup click listener for card_tandon_air to navigate to MonitoringTandonAirActivity
         binding.cardTandonAir.setOnClickListener {
             val intent = Intent(this, MonitoringTandonAirActivity::class.java)
             startActivity(intent)
         }
-
-        // Setup click listener for card_monitoring_ruangan to navigate to MonitoringRuanganActivity
         binding.cardMonitoringRuangan.setOnClickListener {
             val intent = Intent(this, MonitoringRuanganActivity::class.java)
             startActivity(intent)
         }
-
-        // Setup click listener for notification bell to navigate to NotificationActivity
         binding.notificationBell.setOnClickListener {
             val intent = Intent(this, NotificationActivity::class.java)
             startActivity(intent)
         }
+        binding.cardMonitoringListrik.setOnClickListener {
+            val intent = Intent(this, MonitoringListrikActivity::class.java)
+            startActivity(intent)
+        }
+        /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
     }
 }

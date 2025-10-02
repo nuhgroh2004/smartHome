@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/white"
+    tools:context=".SpriteScreenActivity">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/logo_img" />
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="AVARA"
+        android:layout_marginTop="-30dp"
+        android:textSize="56sp"
+        android:textColor="#0092DC"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/subtitleText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="SMART HOME SYSTEM"
+        android:textSize="17sp"
+        android:textColor="#0092DC"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/byText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="By"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#0092DC"
+        android:textStyle="bold"
+        android:gravity="center" />
+    
+    <LinearLayout
+        android:id="@+id/universityLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/logo_ugm_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Universitas Gadjah Mada"
+            android:layout_marginLeft="5dp"
+            android:textSize="20sp"
+            android:textColor="#0092DC"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>

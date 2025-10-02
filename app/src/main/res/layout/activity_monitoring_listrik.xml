@@ -74,7 +74,7 @@
                 <!-- Card untuk menampilkan data listrik -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="90dp"
                     android:orientation="horizontal"
                     android:background="@drawable/lisrrik_kwh_background"
                     android:padding="16dp"

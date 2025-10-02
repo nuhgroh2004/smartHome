@@ -1,12 +1,10 @@
 package com.example.smarthome
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.smarthome.databinding.ActivityHomeBinding
 import com.example.smarthome.databinding.ActivityMonitoringListrikBinding
 
 class MonitoringListrikActivity : AppCompatActivity() {
@@ -23,8 +21,7 @@ class MonitoringListrikActivity : AppCompatActivity() {
         }
 
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 }

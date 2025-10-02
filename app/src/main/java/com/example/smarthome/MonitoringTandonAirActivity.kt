@@ -1,7 +1,6 @@
 package com.example.smarthome
 
 import android.animation.ObjectAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -11,7 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.smarthome.databinding.ActivityControlLampuBinding
 import com.example.smarthome.databinding.ActivityMonitoringTandonAirBinding
 
 class MonitoringTandonAirActivity : AppCompatActivity() {
@@ -32,13 +30,11 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
 
         // Setup back button
         findViewById<View>(R.id.btn_back).setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 

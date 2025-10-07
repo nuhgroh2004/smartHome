@@ -16,6 +16,12 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
+            android:name=".MonitoringListrikActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".MonitoringRuanganActivity"
             android:exported="false" />
         <activity
@@ -29,7 +35,7 @@
             android:exported="false" />
         <activity
 
-            android:name=".NotificationActivity"
+            android:name=".SpriteScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

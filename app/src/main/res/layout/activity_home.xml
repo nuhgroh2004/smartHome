@@ -326,6 +326,7 @@
 
                 <!-- Card 4: Informasi Solar Panel -->
                 <FrameLayout
+                    android:id="@+id/cardMonitoringListrik"
                     android:layout_width="0dp"
                     android:layout_height="140dp"
                     android:layout_weight="1"

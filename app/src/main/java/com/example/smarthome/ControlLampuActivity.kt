@@ -3,6 +3,8 @@ package com.example.smarthome
 import android.animation.ObjectAnimator
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
@@ -65,9 +67,9 @@ class ControlLampuActivity : AppCompatActivity() {
     // <---- Fungsi setupToggleListeners untuk menginisialisasi semua click listener pada tombol-tombol toggle lampu di setiap ruangan dalam rumah ---->
     private fun setupToggleListeners() {
         // Set click listener pada toggle switch langsung, bukan container
-        // Semua ruangan
+        // Semua ruangan - Master toggle that controls all other lamps
         findViewById<LinearLayout>(R.id.toggle_semua_ruangan).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_semua_ruangan, R.id.toggle_semua_ruangan)
+            toggleAllLampsWithAnimation()
         }
         // Ruang tamu
         findViewById<LinearLayout>(R.id.toggle_lampu_1).setOnClickListener {
@@ -435,6 +437,114 @@ class ControlLampuActivity : AppCompatActivity() {
         val key = getKeyForLamp(lampContainerId)
         if (key.isNotEmpty()) {
             sharedPreferences.edit().putBoolean(key, isOn).apply()
+        }
+    }
+
+    // <---- Fungsi toggleAllLampsWithAnimation untuk mengubah status semua lampu sekaligus dengan animasi, berdasarkan status toggle "Semua Ruangan" ---->
+    private fun toggleAllLampsWithAnimation() {
+        val toggleSemuaRuangan = findViewById<LinearLayout>(R.id.toggle_semua_ruangan)
+        val lampSemuaRuangan = findViewById<LinearLayout>(R.id.lampu_semua_ruangan)
+
+        // Cari TextView dan View di dalam toggleSwitch
+        var toggleText: TextView? = null
+        var toggleThumb: View? = null
+        for (i in 0 until toggleSemuaRuangan.childCount) {
+            val child = toggleSemuaRuangan.getChildAt(i)
+            if (child is TextView) {
+                toggleText = child
+            } else {
+                toggleThumb = child
+            }
+        }
+
+        if (toggleText == null || toggleThumb == null) {
+            return
+        }
+
+        // Cek current state berdasarkan text toggle
+        val isCurrentlyOn = toggleText.text.toString().equals("On", ignoreCase = true)
+
+        // Disable semua toggle sementara untuk mencegah interaksi selama animasi
+        disableAllToggles(true)
+
+        if (isCurrentlyOn) {
+            // Ubah semua lampu ke OFF dengan animasi
+            animateToggleToOff(lampSemuaRuangan, toggleSemuaRuangan, toggleText, toggleThumb)
+            // Set semua lampu lainnya ke OFF tanpa animasi
+            setAllOtherLampsToOff()
+        } else {
+            // Ubah semua lampu ke ON dengan animasi
+            animateToggleToOn(lampSemuaRuangan, toggleSemuaRuangan, toggleText, toggleThumb)
+            // Set semua lampu lainnya ke ON tanpa animasi
+            setAllOtherLampsToOn()
+        }
+
+        // Enable kembali semua toggle setelah delay singkat
+        Handler(Looper.getMainLooper()).postDelayed({
+            disableAllToggles(false)
+        }, 700) // Tunggu sampai animasi selesai
+    }
+
+    // <---- Fungsi setAllOtherLampsToOff untuk mengatur semua lampu selain "Semua Ruangan" ke posisi OFF tanpa animasi ---->
+    private fun setAllOtherLampsToOff() {
+        val lampIds = arrayOf(
+            R.id.lampu_1 to R.id.toggle_lampu_1,
+            R.id.lampu_2 to R.id.toggle_lampu_2,
+            R.id.lampu_3 to R.id.toggle_lampu_3,
+            R.id.lampu_4 to R.id.toggle_lampu_4,
+            R.id.lampu_5 to R.id.toggle_lampu_5,
+            R.id.lampu_6 to R.id.toggle_lampu_6,
+            R.id.lampu_7 to R.id.toggle_lampu_7,
+            R.id.lampu_8 to R.id.toggle_lampu_8,
+            R.id.lampu_9 to R.id.toggle_lampu_9,
+            R.id.lampu_10 to R.id.toggle_lampu_10,
+            R.id.lampu_11 to R.id.toggle_lampu_11,
+            R.id.lampu_12 to R.id.toggle_lampu_12,
+            R.id.lampu_13 to R.id.toggle_lampu_13
+        )
+
+        lampIds.forEach { (lampId, toggleId) ->
+            setToggleToOffState(lampId, toggleId)
+            // Save state to SharedPreferences
+            saveToggleState(lampId, false)
+        }
+    }
+
+    // <---- Fungsi setAllOtherLampsToOn untuk mengatur semua lampu selain "Semua Ruangan" ke posisi ON tanpa animasi ---->
+    private fun setAllOtherLampsToOn() {
+        val lampIds = arrayOf(
+            R.id.lampu_1 to R.id.toggle_lampu_1,
+            R.id.lampu_2 to R.id.toggle_lampu_2,
+            R.id.lampu_3 to R.id.toggle_lampu_3,
+            R.id.lampu_4 to R.id.toggle_lampu_4,
+            R.id.lampu_5 to R.id.toggle_lampu_5,
+            R.id.lampu_6 to R.id.toggle_lampu_6,
+            R.id.lampu_7 to R.id.toggle_lampu_7,
+            R.id.lampu_8 to R.id.toggle_lampu_8,
+            R.id.lampu_9 to R.id.toggle_lampu_9,
+            R.id.lampu_10 to R.id.toggle_lampu_10,
+            R.id.lampu_11 to R.id.toggle_lampu_11,
+            R.id.lampu_12 to R.id.toggle_lampu_12,
+            R.id.lampu_13 to R.id.toggle_lampu_13
+        )
+
+        lampIds.forEach { (lampId, toggleId) ->
+            setToggleToOnState(lampId, toggleId)
+            // Save state to SharedPreferences
+            saveToggleState(lampId, true)
+        }
+    }
+
+    // <---- Fungsi disableAllToggles untuk menonaktifkan atau mengaktifkan semua toggle dalam keadaan tertentu, seperti saat animasi berlangsung ---->
+    private fun disableAllToggles(disable: Boolean) {
+        val toggleIds = arrayOf(
+            R.id.toggle_semua_ruangan,
+            R.id.toggle_lampu_1, R.id.toggle_lampu_2, R.id.toggle_lampu_3, R.id.toggle_lampu_4,
+            R.id.toggle_lampu_5, R.id.toggle_lampu_6, R.id.toggle_lampu_7, R.id.toggle_lampu_8,
+            R.id.toggle_lampu_9, R.id.toggle_lampu_10, R.id.toggle_lampu_11, R.id.toggle_lampu_12, R.id.toggle_lampu_13
+        )
+        toggleIds.forEach { toggleId ->
+            findViewById<LinearLayout>(toggleId).isEnabled = !disable
         }
     }
 }

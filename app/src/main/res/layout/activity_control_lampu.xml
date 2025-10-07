@@ -146,17 +146,20 @@
                 <!-- Lampu Ruang Tamu - OFF -->
 
                 <!-- Lampu ruang tamu -->
+                <!-- Lampu Ruang Tamu - OFF -->
+
+                <!-- Lampu Ruang Keluarga 1 - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_ruang_tamu"
+                    android:id="@+id/lampu_1"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/bg_off"
-                    android:padding="16dp"
                     android:layout_marginBottom="12dp"
-                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_off"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -167,11 +170,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
                             android:text="Lampu"
                             android:textColor="#000000"
-                            android:textStyle="bold"
                             android:textSize="24sp"
-                            android:fontFamily="sans-serif-medium" />
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -185,18 +188,18 @@
                     <LinearLayout
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:id="@+id/toggle_ruang_tamu"
+                            android:id="@+id/toggle_lampu_1"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
-                            android:orientation="vertical"
-                            android:padding="5dp"
                             android:clickable="true"
-                            android:focusable="true">
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:padding="5dp">
 
                             <View
                                 android:layout_width="match_parent"
@@ -208,19 +211,17 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
                                 android:text="Off"
                                 android:textColor="#FFFFFF"
-                                android:textSize="12sp"
-                                android:fontFamily="sans-serif-medium"
-                                android:gravity="center" />
+                                android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-                <!-- Lampu Ruang Tamu - OFF -->
 
-                <!-- Lampu Ruang Keluarga 1 - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_ruang_keluarga_1"
+                    android:id="@+id/lampu_2"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -262,7 +263,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_ruang_keluarga_1"
+                            android:id="@+id/toggle_lampu_2"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -292,7 +293,7 @@
 
                 <!-- Lampu Ruang Keluarga 2 - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_ruang_keluarga_2"
+                    android:id="@+id/lampu_3"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -334,7 +335,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_ruang_keluarga_2"
+                            android:id="@+id/toggle_lampu_3"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -364,7 +365,7 @@
 
                 <!-- Lampu Kamar 1 - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_kamar_1"
+                    android:id="@+id/lampu_4"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -406,7 +407,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_kamar_1"
+                            android:id="@+id/toggle_lampu_4"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -436,7 +437,7 @@
 
                 <!-- Lampu Kamar 2 - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_kamar_2"
+                    android:id="@+id/lampu_5"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -478,7 +479,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_kamar_2"
+                            android:id="@+id/toggle_lampu_5"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -508,7 +509,7 @@
 
                 <!-- Lampu Kamar 3 - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_kamar_3"
+                    android:id="@+id/lampu_6"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -550,7 +551,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_kamar_3"
+                            android:id="@+id/toggle_lampu_6"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -580,7 +581,7 @@
 
                 <!-- Lampu Kamar Mandi - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_kamar_mandi"
+                    android:id="@+id/lampu_7"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -622,7 +623,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_kamar_mandi"
+                            android:id="@+id/toggle_lampu_7"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -652,7 +653,7 @@
 
                 <!-- Lampu Dapur - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_dapur"
+                    android:id="@+id/lampu_8"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -694,7 +695,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_dapur"
+                            android:id="@+id/toggle_lampu_8"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -724,7 +725,7 @@
 
                 <!-- Lampu Tangga - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_tangga"
+                    android:id="@+id/lampu_9"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -766,7 +767,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_tangga"
+                            android:id="@+id/toggle_lampu_9"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -796,7 +797,7 @@
 
                 <!-- Lampu Ruang Makan - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_ruang_makan"
+                    android:id="@+id/lampu_10"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -838,7 +839,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_ruang_makan"
+                            android:id="@+id/toggle_lampu_10"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -868,7 +869,7 @@
 
                 <!-- Lampu Smoking Area - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_smoking_area"
+                    android:id="@+id/lampu_11"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -910,7 +911,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_smoking_area"
+                            android:id="@+id/toggle_lampu_11"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -940,7 +941,7 @@
 
                 <!-- Lampu Teras - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_teras"
+                    android:id="@+id/lampu_12"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -982,7 +983,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_teras"
+                            android:id="@+id/toggle_lampu_12"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"
@@ -1012,7 +1013,7 @@
 
                 <!-- Lampu Jemuran - OFF -->
                 <LinearLayout
-                    android:id="@+id/lampu_jemuran"
+                    android:id="@+id/lampu_13"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:orientation="horizontal"
@@ -1054,7 +1055,7 @@
                         android:gravity="center_horizontal">
 
                         <LinearLayout
-                            android:id="@+id/toggle_jemuran"
+                            android:id="@+id/toggle_lampu_13"
                             android:layout_width="50dp"
                             android:layout_height="70dp"
                             android:background="@drawable/toggle_bg_off"

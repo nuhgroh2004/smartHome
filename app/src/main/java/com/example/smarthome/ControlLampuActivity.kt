@@ -43,56 +43,56 @@ class ControlLampuActivity : AppCompatActivity() {
             toggleLampWithAnimation(R.id.lampu_semua_ruangan, R.id.toggle_semua_ruangan)
         }
         // Ruang tamu
-        findViewById<LinearLayout>(R.id.toggle_ruang_tamu).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_ruang_tamu, R.id.toggle_ruang_tamu)
+        findViewById<LinearLayout>(R.id.toggle_lampu_1).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_1, R.id.toggle_lampu_1)
+        }
+        // Ruang tamu
+        findViewById<LinearLayout>(R.id.toggle_lampu_2).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_2, R.id.toggle_lampu_2)
         }
         // Ruang keluarga 1
-        findViewById<LinearLayout>(R.id.toggle_ruang_keluarga_1).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_ruang_keluarga_1, R.id.toggle_ruang_keluarga_1)
+        findViewById<LinearLayout>(R.id.toggle_lampu_3).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_3, R.id.toggle_lampu_3)
         }
         // Ruang keluarga 2
-        findViewById<LinearLayout>(R.id.toggle_ruang_keluarga_2).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_ruang_keluarga_2, R.id.toggle_ruang_keluarga_2)
+        findViewById<LinearLayout>(R.id.toggle_lampu_4).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_4, R.id.toggle_lampu_4)
         }
         // Kamar 1
-        findViewById<LinearLayout>(R.id.toggle_kamar_1).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_kamar_1, R.id.toggle_kamar_1)
+        findViewById<LinearLayout>(R.id.toggle_lampu_5).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_5, R.id.toggle_lampu_5)
         }
         // Kamar 2
-        findViewById<LinearLayout>(R.id.toggle_kamar_2).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_kamar_2, R.id.toggle_kamar_2)
+        findViewById<LinearLayout>(R.id.toggle_lampu_6).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_6, R.id.toggle_lampu_6)
         }
         // Kamar 3
-        findViewById<LinearLayout>(R.id.toggle_kamar_3).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_kamar_3, R.id.toggle_kamar_3)
+        findViewById<LinearLayout>(R.id.toggle_lampu_7).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_7, R.id.toggle_lampu_7)
         }
         // Kamar mandi
-        findViewById<LinearLayout>(R.id.toggle_kamar_mandi).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_kamar_mandi, R.id.toggle_kamar_mandi)
+        findViewById<LinearLayout>(R.id.toggle_lampu_8).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_8, R.id.toggle_lampu_8)
         }
         // Dapur
-        findViewById<LinearLayout>(R.id.toggle_dapur).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_dapur, R.id.toggle_dapur)
+        findViewById<LinearLayout>(R.id.toggle_lampu_9).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_9, R.id.toggle_lampu_9)
         }
         // Tangga
-        findViewById<LinearLayout>(R.id.toggle_tangga).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_tangga, R.id.toggle_tangga)
+        findViewById<LinearLayout>(R.id.toggle_lampu_10).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_10, R.id.toggle_lampu_10)
         }
         // Ruang makan
-        findViewById<LinearLayout>(R.id.toggle_ruang_makan).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_ruang_makan, R.id.toggle_ruang_makan)
+        findViewById<LinearLayout>(R.id.toggle_lampu_11).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_11, R.id.toggle_lampu_11)
         }
         // Smoking area
-        findViewById<LinearLayout>(R.id.toggle_smoking_area).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_smoking_area, R.id.toggle_smoking_area)
+        findViewById<LinearLayout>(R.id.toggle_lampu_12).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_12, R.id.toggle_lampu_12)
         }
         // Teras
-        findViewById<LinearLayout>(R.id.toggle_teras).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_teras, R.id.toggle_teras)
-        }
-        // Jemuran
-        findViewById<LinearLayout>(R.id.toggle_jemuran).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_jemuran, R.id.toggle_jemuran)
+        findViewById<LinearLayout>(R.id.toggle_lampu_13).setOnClickListener {
+            toggleLampWithAnimation(R.id.lampu_13, R.id.toggle_lampu_13)
         }
     }
 

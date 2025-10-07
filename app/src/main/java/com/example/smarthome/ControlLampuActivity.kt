@@ -1,6 +1,7 @@
 package com.example.smarthome
 
 import android.animation.ObjectAnimator
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -14,6 +15,26 @@ import com.example.smarthome.databinding.ActivityControlLampuBinding
 
 class ControlLampuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityControlLampuBinding
+    private lateinit var sharedPreferences: SharedPreferences
+
+    companion object {
+        private const val PREFS_NAME = "lamp_states"
+        private const val KEY_SEMUA_RUANGAN = "semua_ruangan"
+        private const val KEY_LAMPU_1 = "lampu_1"
+        private const val KEY_LAMPU_2 = "lampu_2"
+        private const val KEY_LAMPU_3 = "lampu_3"
+        private const val KEY_LAMPU_4 = "lampu_4"
+        private const val KEY_LAMPU_5 = "lampu_5"
+        private const val KEY_LAMPU_6 = "lampu_6"
+        private const val KEY_LAMPU_7 = "lampu_7"
+        private const val KEY_LAMPU_8 = "lampu_8"
+        private const val KEY_LAMPU_9 = "lampu_9"
+        private const val KEY_LAMPU_10 = "lampu_10"
+        private const val KEY_LAMPU_11 = "lampu_11"
+        private const val KEY_LAMPU_12 = "lampu_12"
+        private const val KEY_LAMPU_13 = "lampu_13"
+    }
+
     // <---- Fungsi onCreate untuk inisialisasi activity dan melakukan setup awal UI serta listener untuk pengolahan insets sistem ---->
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +47,15 @@ class ControlLampuActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Inisialisasi SharedPreferences
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+
         // Inisialisasi click listeners untuk toggle switch langsung
         setupToggleListeners()
 
+        // Restore saved toggle states
+        restoreToggleStates()
 
         binding.btnBack.setOnClickListener {
             finish()
@@ -171,6 +198,10 @@ class ControlLampuActivity : AppCompatActivity() {
                 toggleSwitch.addView(newThumbView)
                 toggleSwitch.addView(toggleText)
                 updateContainerTextColors(lampContainer, false)
+
+                // Save state to SharedPreferences
+                saveToggleState(lampContainer.id, false)
+
                 toggleSwitch.isEnabled = true
             }
         })
@@ -221,6 +252,10 @@ class ControlLampuActivity : AppCompatActivity() {
                 toggleSwitch.addView(toggleText)
                 toggleSwitch.addView(newThumbView)
                 updateContainerTextColors(lampContainer, true)
+
+                // Save state to SharedPreferences
+                saveToggleState(lampContainer.id, true)
+
                 toggleSwitch.isEnabled = true
             }
         })
@@ -256,6 +291,150 @@ class ControlLampuActivity : AppCompatActivity() {
                 }
                 break // Keluar dari loop setelah menemukan LinearLayout yang tepat
             }
+        }
+    }
+
+    // <---- Fungsi restoreToggleStates untuk mengembalikan status toggle lampu sesuai dengan yang tersimpan di SharedPreferences saat aplikasi dibuka ---->
+    private fun restoreToggleStates() {
+        val lampIds = mapOf(
+            R.id.lampu_semua_ruangan to R.id.toggle_semua_ruangan,
+            R.id.lampu_1 to R.id.toggle_lampu_1,
+            R.id.lampu_2 to R.id.toggle_lampu_2,
+            R.id.lampu_3 to R.id.toggle_lampu_3,
+            R.id.lampu_4 to R.id.toggle_lampu_4,
+            R.id.lampu_5 to R.id.toggle_lampu_5,
+            R.id.lampu_6 to R.id.toggle_lampu_6,
+            R.id.lampu_7 to R.id.toggle_lampu_7,
+            R.id.lampu_8 to R.id.toggle_lampu_8,
+            R.id.lampu_9 to R.id.toggle_lampu_9,
+            R.id.lampu_10 to R.id.toggle_lampu_10,
+            R.id.lampu_11 to R.id.toggle_lampu_11,
+            R.id.lampu_12 to R.id.toggle_lampu_12,
+            R.id.lampu_13 to R.id.toggle_lampu_13
+        )
+
+        lampIds.forEach { (lampId, toggleId) ->
+            val isOn = sharedPreferences.getBoolean(getKeyForLamp(lampId), false)
+            if (isOn) {
+                setToggleToOnState(lampId, toggleId)
+            } else {
+                setToggleToOffState(lampId, toggleId)
+            }
+        }
+    }
+
+    // <---- Fungsi setToggleToOnState untuk mengatur toggle ke posisi ON tanpa animasi saat restore ---->
+    private fun setToggleToOnState(lampContainerId: Int, toggleId: Int) {
+        val lampContainer = findViewById<LinearLayout>(lampContainerId)
+        val toggleSwitch = findViewById<LinearLayout>(toggleId)
+
+        // Update backgrounds
+        lampContainer.setBackgroundResource(R.drawable.bg_on)
+        toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_on)
+
+        // Clear and rebuild toggle
+        toggleSwitch.removeAllViews()
+
+        // Create TextView for ON state
+        val toggleText = TextView(this)
+        toggleText.text = "On"
+        toggleText.setTextColor(resources.getColor(android.R.color.white, null))
+        toggleText.textSize = 12f
+        toggleText.gravity = android.view.Gravity.CENTER
+        toggleText.typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        val textLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            0,
+            1f
+        )
+        toggleText.layoutParams = textLayoutParams
+
+        // Create thumb view for ON state
+        val thumbView = View(this)
+        val thumbLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            25.dpToPx()
+        )
+        thumbLayoutParams.setMargins(0, 0, 0, 4.dpToPx())
+        thumbView.layoutParams = thumbLayoutParams
+        thumbView.setBackgroundResource(R.drawable.toggle_thumb_on)
+
+        // Add views in ON order: TextView first, View second
+        toggleSwitch.addView(toggleText)
+        toggleSwitch.addView(thumbView)
+
+        updateContainerTextColors(lampContainer, true)
+    }
+
+    // <---- Fungsi setToggleToOffState untuk mengatur toggle ke posisi OFF tanpa animasi saat restore ---->
+    private fun setToggleToOffState(lampContainerId: Int, toggleId: Int) {
+        val lampContainer = findViewById<LinearLayout>(lampContainerId)
+        val toggleSwitch = findViewById<LinearLayout>(toggleId)
+
+        // Update backgrounds
+        lampContainer.setBackgroundResource(R.drawable.bg_off)
+        toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_off)
+
+        // Clear and rebuild toggle
+        toggleSwitch.removeAllViews()
+
+        // Create thumb view for OFF state
+        val thumbView = View(this)
+        val thumbLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            25.dpToPx()
+        )
+        thumbLayoutParams.setMargins(0, 0, 0, 4.dpToPx())
+        thumbView.layoutParams = thumbLayoutParams
+        thumbView.setBackgroundResource(R.drawable.toggle_thumb_off)
+
+        // Create TextView for OFF state
+        val toggleText = TextView(this)
+        toggleText.text = "Off"
+        toggleText.setTextColor(resources.getColor(android.R.color.white, null))
+        toggleText.textSize = 12f
+        toggleText.gravity = android.view.Gravity.CENTER
+        toggleText.typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        val textLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            0,
+            1f
+        )
+        toggleText.layoutParams = textLayoutParams
+
+        // Add views in OFF order: View first, TextView second
+        toggleSwitch.addView(thumbView)
+        toggleSwitch.addView(toggleText)
+
+        updateContainerTextColors(lampContainer, false)
+    }
+
+    // <---- Fungsi getKeyForLamp untuk mendapatkan key SharedPreferences berdasarkan ID lampu ---->
+    private fun getKeyForLamp(lampId: Int): String {
+        return when (lampId) {
+            R.id.lampu_semua_ruangan -> KEY_SEMUA_RUANGAN
+            R.id.lampu_1 -> KEY_LAMPU_1
+            R.id.lampu_2 -> KEY_LAMPU_2
+            R.id.lampu_3 -> KEY_LAMPU_3
+            R.id.lampu_4 -> KEY_LAMPU_4
+            R.id.lampu_5 -> KEY_LAMPU_5
+            R.id.lampu_6 -> KEY_LAMPU_6
+            R.id.lampu_7 -> KEY_LAMPU_7
+            R.id.lampu_8 -> KEY_LAMPU_8
+            R.id.lampu_9 -> KEY_LAMPU_9
+            R.id.lampu_10 -> KEY_LAMPU_10
+            R.id.lampu_11 -> KEY_LAMPU_11
+            R.id.lampu_12 -> KEY_LAMPU_12
+            R.id.lampu_13 -> KEY_LAMPU_13
+            else -> ""
+        }
+    }
+
+    // <---- Fungsi saveToggleState untuk menyimpan status toggle ke SharedPreferences ---->
+    private fun saveToggleState(lampContainerId: Int, isOn: Boolean) {
+        val key = getKeyForLamp(lampContainerId)
+        if (key.isNotEmpty()) {
+            sharedPreferences.edit().putBoolean(key, isOn).apply()
         }
     }
 }

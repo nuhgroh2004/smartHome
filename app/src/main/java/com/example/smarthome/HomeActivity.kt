@@ -16,6 +16,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import org.w3c.dom.Text
+import android.view.View
+import android.view.animation.AnimationUtils
+import android.animation.ObjectAnimator
+import android.animation.AnimatorSet
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -50,24 +54,34 @@ class HomeActivity : AppCompatActivity() {
 
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
         binding.cardLampu.setOnClickListener {
-            val intent = Intent(this, ControlLampuActivity::class.java)
-            startActivity(intent)
+            animateClick(it) {
+                val intent = Intent(this, ControlLampuActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.cardTandonAir.setOnClickListener {
-            val intent = Intent(this, MonitoringTandonAirActivity::class.java)
-            startActivity(intent)
+            animateClick(it) {
+                val intent = Intent(this, MonitoringTandonAirActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.cardMonitoringRuangan.setOnClickListener {
-            val intent = Intent(this, MonitoringRuanganActivity::class.java)
-            startActivity(intent)
+            animateClick(it) {
+                val intent = Intent(this, MonitoringRuanganActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.notificationBell.setOnClickListener {
-            val intent = Intent(this, NotificationActivity::class.java)
-            startActivity(intent)
+            animateClick(it) {
+                val intent = Intent(this, NotificationActivity::class.java)
+                startActivity(intent)
+            }
         }
         binding.cardMonitoringListrik.setOnClickListener {
-            val intent = Intent(this, MonitoringListrikActivity::class.java)
-            startActivity(intent)
+            animateClick(it) {
+                val intent = Intent(this, MonitoringListrikActivity::class.java)
+                startActivity(intent)
+            }
         }
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
     }
@@ -86,6 +100,38 @@ class HomeActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             doubleBackToExitPressedOnce = false
         }, 2000) // Reset after 2 seconds
+    }
+
+    // Fungsi untuk animasi klik
+    private fun animateClick(view: View, action: () -> Unit) {
+        val scaleDown = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(view, "scaleX", 0.95f),
+                ObjectAnimator.ofFloat(view, "scaleY", 0.95f)
+            )
+            duration = 100
+        }
+
+        val scaleUp = AnimatorSet().apply {
+            playTogether(
+                ObjectAnimator.ofFloat(view, "scaleX", 1f),
+                ObjectAnimator.ofFloat(view, "scaleY", 1f)
+            )
+            duration = 100
+        }
+
+        scaleDown.start()
+        scaleDown.addListener(object : android.animation.Animator.AnimatorListener {
+            override fun onAnimationStart(animation: android.animation.Animator) {}
+            override fun onAnimationEnd(animation: android.animation.Animator) {
+                scaleUp.start()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    action()
+                }, 50)
+            }
+            override fun onAnimationCancel(animation: android.animation.Animator) {}
+            override fun onAnimationRepeat(animation: android.animation.Animator) {}
+        })
     }
 
 }

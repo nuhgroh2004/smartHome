@@ -7,19 +7,29 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smarthome.databinding.ActivityMonitoringTandonAirBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MonitoringTandonAirActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMonitoringTandonAirBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var firebase: FirebaseDatabase
 
     companion object {
         private const val PREFS_NAME = "water_states"
         private const val KEY_AIR_STATUS = "air_status"
+        // Konstanta untuk perhitungan level air
+        private const val MAX_WATER_HEIGHT_CM = 50.0 // Tinggi maksimum tandon dalam cm (diubah dari 100 ke 50)
+        private const val MIN_WATER_HEIGHT_CM = 0.0   // Tinggi minimum tandon dalam cm
+        private const val MAX_IMAGE_HEIGHT_DP = 200   // Tinggi maksimum gambar dalam dp
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +43,14 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
             insets
         }
 
+        // Inisialisasi Firebase
+        firebase = FirebaseDatabase.getInstance()
+
         // Inisialisasi SharedPreferences
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+
+        // Setup Firebase listener untuk monitoring data tandon air
+        setupFirebaseListener()
 
         // Restore state terakhir dari SharedPreferences
         restoreWaterToggleState()
@@ -50,6 +66,126 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
+    }
+
+    // <---- Fungsi setupFirebaseListener untuk mendengarkan perubahan data dari Firebase Realtime Database ---->
+    private fun setupFirebaseListener() {
+        firebase.reference.child("IoTSystem").child("TandonAir")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try {
+                        // Debug logging untuk melihat data yang diterima
+                        android.util.Log.d("FirebaseData", "Snapshot exists: ${snapshot.exists()}")
+                        android.util.Log.d("FirebaseData", "Full data: ${snapshot.value}")
+                        android.util.Log.d("FirebaseData", "tinggiAir_cm raw: ${snapshot.child("tinggiAir_cm").value}")
+                        android.util.Log.d("FirebaseData", "pompa raw: ${snapshot.child("pompa").value}")
+
+                        // Ambil data tinggi air dengan handling berbagai tipe data
+                        val tinggiAirRaw = snapshot.child("tinggiAir_cm").value
+                        val tinggiAirCm = when (tinggiAirRaw) {
+                            is Double -> tinggiAirRaw
+                            is Float -> tinggiAirRaw.toDouble()
+                            is Long -> tinggiAirRaw.toDouble()
+                            is Int -> tinggiAirRaw.toDouble()
+                            is String -> tinggiAirRaw.toDoubleOrNull() ?: 0.0
+                            else -> 0.0
+                        }
+
+                        val pompStatus = snapshot.child("pompa").getValue(String::class.java) ?: "OFF"
+
+                        android.util.Log.d("FirebaseData", "Processed tinggiAirCm: $tinggiAirCm")
+                        android.util.Log.d("FirebaseData", "Processed pompStatus: $pompStatus")
+
+                        // Update UI berdasarkan data dari Firebase
+                        updateWaterLevelUI(tinggiAirCm)
+                        updatePumpStatusFromFirebase(pompStatus)
+
+                    } catch (e: Exception) {
+                        android.util.Log.e("FirebaseError", "Error processing data", e)
+                        e.printStackTrace()
+                        // Jika ada error, set default values
+                        updateWaterLevelUI(0.0)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    android.util.Log.e("FirebaseError", "Database error: ${error.message}")
+                    // Handle error - set default values
+                    updateWaterLevelUI(0.0)
+                }
+            })
+    }
+
+    // <---- Fungsi updateWaterLevelUI untuk memperbarui tampilan level air berdasarkan data sensor ---->
+    private fun updateWaterLevelUI(tinggiAirCm: Double) {
+        // Hitung persentase level air (0-100%)
+        val percentage = calculateWaterPercentage(tinggiAirCm)
+
+        // Update text persentase
+        val waterLevelText = findViewById<TextView>(R.id.water_level_text)
+        waterLevelText.text = "${percentage.toInt()}%"
+
+        // Update tinggi gambar level air
+        updateAirLevelImageHeight(percentage)
+    }
+
+    // <---- Fungsi calculateWaterPercentage untuk menghitung persentase level air dari tinggi dalam cm ---->
+    private fun calculateWaterPercentage(tinggiAirCm: Double): Double {
+        // Pastikan nilai dalam range yang valid
+        val clampedHeight = tinggiAirCm.coerceIn(MIN_WATER_HEIGHT_CM, MAX_WATER_HEIGHT_CM)
+
+        // Hitung persentase (0-100%)
+        return (clampedHeight / MAX_WATER_HEIGHT_CM) * 100.0
+    }
+
+    // <---- Fungsi updateAirLevelImageHeight untuk mengatur tinggi gambar level air sesuai persentase ---->
+    private fun updateAirLevelImageHeight(percentage: Double) {
+        val airLevelImg = findViewById<ImageView>(R.id.air_level_img)
+
+        // Hitung tinggi berdasarkan persentase dengan maksimum 180dp
+        val maxHeightPx = (MAX_IMAGE_HEIGHT_DP * resources.displayMetrics.density).toInt()
+
+        // Hitung tinggi baru berdasarkan persentase (minimum 5% untuk visibility)
+        val minPercentage = 5.0
+        val adjustedPercentage = percentage.coerceAtLeast(minPercentage)
+        val newHeight = (maxHeightPx * (adjustedPercentage / 100.0)).toInt()
+
+        // Simpan tinggi lama untuk animasi
+        val oldHeight = airLevelImg.height
+
+        // Animasi perubahan tinggi menggunakan ValueAnimator
+        val animator = android.animation.ValueAnimator.ofInt(oldHeight, newHeight)
+        animator.duration = 500
+        animator.interpolator = DecelerateInterpolator()
+        animator.addUpdateListener { valueAnimator ->
+            val animatedValue = valueAnimator.animatedValue as Int
+            val layoutParams = airLevelImg.layoutParams
+            layoutParams.height = animatedValue
+            airLevelImg.layoutParams = layoutParams
+            airLevelImg.requestLayout() // PENTING: Force layout update
+        }
+        animator.start()
+    }
+
+    // <---- Fungsi updatePumpStatusFromFirebase untuk sinkronisasi status pompa dari Firebase ---->
+    private fun updatePumpStatusFromFirebase(pompStatus: String) {
+        val isOn = pompStatus.equals("ON", ignoreCase = true)
+
+        // Update UI toggle sesuai status dari Firebase
+        if (isOn) {
+            setToggleToOnState()
+        } else {
+            setToggleToOffState()
+        }
+
+        // Simpan state ke SharedPreferences
+        saveWaterToggleState(isOn)
+    }
+
+    // <---- Fungsi updateFirebasePumpStatus untuk mengirim perubahan status pompa ke Firebase ---->
+    private fun updateFirebasePumpStatus(isOn: Boolean) {
+        val status = if (isOn) "ON" else "OFF"
+        firebase.reference.child("IoTSystem").child("TandonAir").child("pompa").setValue(status)
     }
 
     // <---- Fungsi setupToggleListener untuk menginisialisasi click listener pada tombol toggle air ---->
@@ -151,6 +287,9 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
                 // Simpan state ke SharedPreferences
                 saveWaterToggleState(false)
 
+                // Update status pompa ke Firebase
+                updateFirebasePumpStatus(false)
+
                 toggleSwitch.isEnabled = true
             }
         })
@@ -213,6 +352,9 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
 
                 // Simpan state ke SharedPreferences
                 saveWaterToggleState(true)
+
+                // Update status pompa ke Firebase
+                updateFirebasePumpStatus(true)
 
                 toggleSwitch.isEnabled = true
             }
@@ -363,3 +505,4 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
         updateContainerTextColors(airContainer, false)
     }
 }
+

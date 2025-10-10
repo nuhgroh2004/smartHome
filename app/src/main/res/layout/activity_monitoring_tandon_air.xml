@@ -73,9 +73,11 @@
                 android:orientation="vertical"
                 >
                 <ImageView
+                    android:id="@+id/air_level_img"
                     android:layout_width="220dp"
-                    android:layout_height="220dp"
-                    android:layout_gravity="center"
+                    android:layout_height="180dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="117dp"
                     android:src="@drawable/toren_air_level_air"
                     />
 
@@ -87,6 +89,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/water_level_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"

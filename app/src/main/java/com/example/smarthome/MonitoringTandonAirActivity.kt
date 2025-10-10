@@ -1,6 +1,7 @@
 package com.example.smarthome
 
 import android.animation.ObjectAnimator
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -14,6 +15,13 @@ import com.example.smarthome.databinding.ActivityMonitoringTandonAirBinding
 
 class MonitoringTandonAirActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMonitoringTandonAirBinding
+    private lateinit var sharedPreferences: SharedPreferences
+
+    companion object {
+        private const val PREFS_NAME = "water_states"
+        private const val KEY_AIR_STATUS = "air_status"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMonitoringTandonAirBinding.inflate(layoutInflater)
@@ -24,6 +32,12 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Inisialisasi SharedPreferences
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+
+        // Restore state terakhir dari SharedPreferences
+        restoreWaterToggleState()
 
         // Setup toggle listener untuk kontrol air
         setupToggleListener()
@@ -133,6 +147,10 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
                 toggleSwitch.addView(toggleText)
 
                 updateContainerTextColors(airContainer, false)
+
+                // Simpan state ke SharedPreferences
+                saveWaterToggleState(false)
+
                 toggleSwitch.isEnabled = true
             }
         })
@@ -192,6 +210,10 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
                 toggleSwitch.addView(newThumbView)
 
                 updateContainerTextColors(airContainer, true)
+
+                // Simpan state ke SharedPreferences
+                saveWaterToggleState(true)
+
                 toggleSwitch.isEnabled = true
             }
         })
@@ -235,5 +257,109 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
                 break // Keluar dari loop setelah menemukan LinearLayout yang tepat
             }
         }
+    }
+
+    // <---- Fungsi saveWaterToggleState untuk menyimpan state toggle air ke SharedPreferences ---->
+    private fun saveWaterToggleState(isOn: Boolean) {
+        with(sharedPreferences.edit()) {
+            putBoolean(KEY_AIR_STATUS, isOn)
+            apply()
+        }
+    }
+
+    // <---- Fungsi restoreWaterToggleState untuk mengembalikan state toggle air dari SharedPreferences saat aplikasi dimulai ---->
+    private fun restoreWaterToggleState() {
+        val isOn = sharedPreferences.getBoolean(KEY_AIR_STATUS, false)
+        if (isOn) {
+            setToggleToOnState()
+        } else {
+            setToggleToOffState()
+        }
+    }
+
+    // <---- Fungsi setToggleToOnState untuk mengatur toggle ke posisi ON tanpa animasi saat restore ---->
+    private fun setToggleToOnState() {
+        val airContainer = findViewById<LinearLayout>(R.id.air_btn)
+        val toggleSwitch = findViewById<LinearLayout>(R.id.toggle_air_btn)
+
+        // Update backgrounds
+        airContainer.setBackgroundResource(R.drawable.bg_on)
+        toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_on)
+
+        // Clear and rebuild toggle
+        toggleSwitch.removeAllViews()
+
+        // Create TextView for ON state
+        val toggleText = TextView(this)
+        toggleText.text = "On"
+        toggleText.setTextColor(resources.getColor(android.R.color.white, null))
+        toggleText.textSize = 12f
+        toggleText.gravity = android.view.Gravity.CENTER
+        toggleText.typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        val textLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            0,
+            1f
+        )
+        toggleText.layoutParams = textLayoutParams
+
+        // Create thumb view for ON state
+        val thumbView = View(this)
+        val thumbLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            25.dpToPx()
+        )
+        thumbLayoutParams.setMargins(0, 0, 0, 4.dpToPx())
+        thumbView.layoutParams = thumbLayoutParams
+        thumbView.setBackgroundResource(R.drawable.toggle_thumb_on)
+
+        // Add views in ON order: TextView first (di atas), View second (di bawah)
+        toggleSwitch.addView(toggleText)
+        toggleSwitch.addView(thumbView)
+
+        updateContainerTextColors(airContainer, true)
+    }
+
+    // <---- Fungsi setToggleToOffState untuk mengatur toggle ke posisi OFF tanpa animasi saat restore ---->
+    private fun setToggleToOffState() {
+        val airContainer = findViewById<LinearLayout>(R.id.air_btn)
+        val toggleSwitch = findViewById<LinearLayout>(R.id.toggle_air_btn)
+
+        // Update backgrounds
+        airContainer.setBackgroundResource(R.drawable.bg_off)
+        toggleSwitch.setBackgroundResource(R.drawable.toggle_bg_off)
+
+        // Clear and rebuild toggle
+        toggleSwitch.removeAllViews()
+
+        // Create thumb view for OFF state
+        val thumbView = View(this)
+        val thumbLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            25.dpToPx()
+        )
+        thumbLayoutParams.setMargins(0, 0, 0, 4.dpToPx())
+        thumbView.layoutParams = thumbLayoutParams
+        thumbView.setBackgroundResource(R.drawable.toggle_thumb_off)
+
+        // Create TextView for OFF state
+        val toggleText = TextView(this)
+        toggleText.text = "Off"
+        toggleText.setTextColor(resources.getColor(android.R.color.white, null))
+        toggleText.textSize = 12f
+        toggleText.gravity = android.view.Gravity.CENTER
+        toggleText.typeface = android.graphics.Typeface.create("sans-serif-medium", android.graphics.Typeface.NORMAL)
+        val textLayoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            0,
+            1f
+        )
+        toggleText.layoutParams = textLayoutParams
+
+        // Add views in OFF order: View first (di bawah), TextView second (di atas)
+        toggleSwitch.addView(thumbView)
+        toggleSwitch.addView(toggleText)
+
+        updateContainerTextColors(airContainer, false)
     }
 }

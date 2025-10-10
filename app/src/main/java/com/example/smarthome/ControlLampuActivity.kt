@@ -471,13 +471,20 @@ class ControlLampuActivity : AppCompatActivity() {
             // Ubah semua lampu ke OFF dengan animasi
             animateToggleToOff(lampSemuaRuangan, toggleSemuaRuangan, toggleText, toggleThumb)
             // Set semua lampu lainnya ke OFF tanpa animasi
-            setAllOtherLampsToOff()
+            Handler(Looper.getMainLooper()).postDelayed({
+                setAllOtherLampsToOff()
+            }, 100) // Delay kecil untuk memastikan animasi master toggle sudah dimulai
         } else {
             // Ubah semua lampu ke ON dengan animasi
             animateToggleToOn(lampSemuaRuangan, toggleSemuaRuangan, toggleText, toggleThumb)
             // Set semua lampu lainnya ke ON tanpa animasi
-            setAllOtherLampsToOn()
+            Handler(Looper.getMainLooper()).postDelayed({
+                setAllOtherLampsToOn()
+            }, 100) // Delay kecil untuk memastikan animasi master toggle sudah dimulai
         }
+
+        // Save state untuk master toggle
+        saveToggleState(R.id.lampu_semua_ruangan, !isCurrentlyOn)
 
         // Enable kembali semua toggle setelah delay singkat
         Handler(Looper.getMainLooper()).postDelayed({

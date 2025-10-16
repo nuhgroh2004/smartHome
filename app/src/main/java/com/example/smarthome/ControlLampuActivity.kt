@@ -56,7 +56,6 @@ class ControlLampuActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         setupFirebaseListener()
         setupToggleListeners()
-        restoreToggleStates()
         binding.btnBack.setOnClickListener {
             finish()
         }

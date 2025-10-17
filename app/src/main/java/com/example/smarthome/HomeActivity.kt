@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,9 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import org.w3c.dom.Text
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.animation.ObjectAnimator
 import android.animation.AnimatorSet
 
@@ -26,6 +25,8 @@ class HomeActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
 
     private lateinit var firebase:FirebaseDatabase
+    // Add dispatcher callback reference
+    private lateinit var backPressedCallback: OnBackPressedCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,23 @@ class HomeActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Handle system back press using OnBackPressedDispatcher
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce) {
+                    finishAffinity()
+                    return
+                }
+                doubleBackToExitPressedOnce = true
+                val toast = Toast.makeText(this@HomeActivity, "Tekan 1 kali lagi untuk keluar", Toast.LENGTH_SHORT)
+                toast.show()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    doubleBackToExitPressedOnce = false
+                }, 2000)
+            }
+        }
+        onBackPressedDispatcher.addCallback(this, backPressedCallback)
 
         firebase = FirebaseDatabase.getInstance()
         firebase.reference.child("data").addValueEventListener(object : ValueEventListener{
@@ -86,22 +104,6 @@ class HomeActivity : AppCompatActivity() {
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
     }
 
-    override fun onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed()
-            finishAffinity() // Close all activities and exit app
-            return
-        }
-
-        this.doubleBackToExitPressedOnce = true
-        val toast = Toast.makeText(this, "Tekan 1 kali lagi untuk keluar", Toast.LENGTH_SHORT)
-        toast.show()
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            doubleBackToExitPressedOnce = false
-        }, 2000) // Reset after 2 seconds
-    }
-
     // Fungsi untuk animasi klik
     private fun animateClick(view: View, action: () -> Unit) {
         val scaleDown = AnimatorSet().apply {
@@ -132,6 +134,11 @@ class HomeActivity : AppCompatActivity() {
             override fun onAnimationCancel(animation: android.animation.Animator) {}
             override fun onAnimationRepeat(animation: android.animation.Animator) {}
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (this::backPressedCallback.isInitialized) backPressedCallback.remove()
     }
 
 }

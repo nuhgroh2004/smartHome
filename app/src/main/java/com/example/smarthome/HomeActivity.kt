@@ -1,6 +1,9 @@
 package com.example.smarthome
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +11,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smarthome.databinding.ActivityHomeBinding
@@ -28,11 +33,25 @@ class HomeActivity : AppCompatActivity() {
     // Add dispatcher callback reference
     private lateinit var backPressedCallback: OnBackPressedCallback
 
+    // Permission launcher for POST_NOTIFICATIONS (Android 13+)
+    private val requestNotificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                // Ensure notification channel exists
+                NotificationHelper.createNotificationChannel(this)
+            } else {
+                Toast.makeText(this, "Izin notifikasi ditolak. Anda tidak akan menerima pemberitahuan.", Toast.LENGTH_LONG).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
+
+        // Request notification permission on Android 13+
+        requestNotificationPermissionIfNeeded()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -102,6 +121,28 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
+    }
+
+    private fun requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED -> {
+                    // Already granted
+                    NotificationHelper.createNotificationChannel(this)
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
+                    // You may show a rationale to the user and then request permission
+                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+                else -> {
+                    // Directly request permission
+                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        } else {
+            // Pre Android 13: ensure channel exists
+            NotificationHelper.createNotificationChannel(this)
+        }
     }
 
     // Fungsi untuk animasi klik

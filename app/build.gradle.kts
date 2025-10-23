@@ -61,4 +61,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.1")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
+    // Firebase Cloud Messaging
+    implementation("com.google.firebase:firebase-messaging:23.2.1")
 }

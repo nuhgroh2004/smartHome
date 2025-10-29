@@ -4,9 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.FrameLayout
-import android.widget.ListPopupWindow
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -116,7 +114,7 @@ class MonitoringListrikActivity : AppCompatActivity() {
         // Wait for layout to be measured before positioning label
         binding.chartFrameContainer.post {
             // Position label above bar Sen by default, 10dp distance
-            positionLabelAboveBar(binding.barKam, distanceDp = 50f)
+            positionLabelAboveBar(binding.barKam, distanceDp = 10f)
             updateMovedLabelValue(binding.barKam)
         }
 
@@ -155,7 +153,7 @@ class MonitoringListrikActivity : AppCompatActivity() {
         currentActiveBar = clickedBar
 
         // Position the floating label above the clicked bar with 10dp distance
-        positionLabelAboveBar(clickedBar, distanceDp = 50f)
+        positionLabelAboveBar(clickedBar, distanceDp = 10f)
 
         // Update value from tag but treat 20dp (or <=20dp) as 0.0 kWh
         updateMovedLabelValue(clickedBar)
@@ -164,7 +162,7 @@ class MonitoringListrikActivity : AppCompatActivity() {
     }
 
     // Position the floating label above the specified bar using absolute coordinates in root FrameLayout
-    private fun positionLabelAboveBar(bar: View, distanceDp: Float = 50f) {
+    private fun positionLabelAboveBar(bar: View, distanceDp: Float = 10f) {
         val label = binding.valueLabelKam
 
         // Ensure label is measured first if not yet measured
@@ -175,17 +173,17 @@ class MonitoringListrikActivity : AppCompatActivity() {
             )
         }
 
-        // Get bar position in window coordinates
+        // Get bar position relative to chart_frame_container
         val barLocation = IntArray(2)
         bar.getLocationInWindow(barLocation)
 
-        // Get root main container position in window coordinates
-        val mainLocation = IntArray(2)
-        findViewById<View>(R.id.main).getLocationInWindow(mainLocation)
+        // Get chart_frame_container position
+        val frameLocation = IntArray(2)
+        binding.chartFrameContainer.getLocationInWindow(frameLocation)
 
-        // Calculate relative position to root FrameLayout
-        val relativeX = barLocation[0] - mainLocation[0]
-        val relativeY = barLocation[1] - mainLocation[1]
+        // Calculate relative position to FrameLayout (chart container)
+        val relativeX = barLocation[0] - frameLocation[0]
+        val relativeY = barLocation[1] - frameLocation[1]
 
         // Center the label horizontally above the bar
         val labelWidth = if (label.width > 0) label.width else label.measuredWidth
@@ -202,7 +200,7 @@ class MonitoringListrikActivity : AppCompatActivity() {
         // Calculate Y position: bar top - label height - margin
         val labelY = relativeY - labelHeight - marginAboveBar
 
-        // Update FrameLayout params with absolute position (relative to root)
+        // Update FrameLayout params with absolute position (relative to chart_frame_container)
         val params = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
             FrameLayout.LayoutParams.WRAP_CONTENT

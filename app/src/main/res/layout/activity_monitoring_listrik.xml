@@ -8,707 +8,707 @@
     android:background="#FFFFFF"
     tools:context=".MonitoringListrikActivity">
 
-    <LinearLayout
+    <!-- ScrollView with content -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:orientation="vertical"
-        android:layout_margin="20dp"
+        android:scrollbars="none"
         android:clipChildren="false"
-        android:clipToPadding="false">
-
-        <!-- Header dengan back button dan title -->
+        android:clipToPadding="false"
+        android:paddingTop="84dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingBottom="20dp">
-
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/arrow_back"
-                android:contentDescription="Back"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="12dp"
-                android:src="@drawable/logo_img"
-                android:contentDescription="Avara Logo" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Avara"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#0092DC"
-                android:fontFamily="sans-serif-medium" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="Monitoring ruangan"
-                android:textSize="18sp"
-                android:textColor="#333333"
-                android:fontFamily="sans-serif-medium" />
-        </LinearLayout>
-
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
+            android:orientation="vertical"
             android:clipChildren="false"
             android:clipToPadding="false">
+
+            <!-- Card untuk menampilkan data listrik -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:clipChildren="false"
-                android:clipToPadding="false">
+                android:layout_height="90dp"
+                android:orientation="horizontal"
+                android:background="@drawable/lisrrik_kwh_background"
+                android:padding="16dp"
+                android:gravity="center_vertical">
 
-                <!-- Card untuk menampilkan data listrik -->
+                <!-- Bagian Kiri - Biaya yang dihemat -->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:background="@drawable/lisrrik_kwh_background"
-                    android:padding="16dp"
                     android:gravity="center_vertical">
 
-                    <!-- Bagian Kiri - Biaya yang dihemat -->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <!-- Icon Money Bag -->
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/kwh_rp_img"
-                            android:padding="8dp"
-                            android:scaleType="centerInside"/>
-
-                        <!-- Text Container -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rp 500.000"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Hemat"
-                                android:textColor="#666666"
-                                android:textSize="12sp"
-                                android:layout_marginTop="2dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Divider Line -->
-                    <View
-                        android:layout_width="1dp"
+                    <!-- Icon Money Bag -->
+                    <ImageView
+                        android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="#E0E0E0"
-                        android:layout_marginHorizontal="16dp"/>
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/kwh_rp_img"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"/>
 
-                    <!-- Bagian Kanan - Sisa Energi -->
+                    <!-- Text Container -->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:orientation="vertical">
 
-                        <!-- Icon Energy/House -->
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_marginEnd="12dp"
-                            android:src="@drawable/kwh_home_img"
-                            android:padding="8dp"
-                            android:scaleType="centerInside"/>
-
-                        <!-- Text Container -->
-                        <LinearLayout
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:text="Rp 500.000"
+                            android:textColor="@android:color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="5 kWh/10 kWh"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Sisa energi"
-                                android:textColor="#666666"
-                                android:textSize="12sp"
-                                android:layout_marginTop="2dp"/>
-                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hemat"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:layout_marginTop="2dp"/>
                     </LinearLayout>
                 </LinearLayout>
 
+                <!-- Divider Line -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="40dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginHorizontal="16dp"/>
+
+                <!-- Bagian Kanan - Sisa Energi -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Icon Energy/House -->
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/kwh_home_img"
+                        android:padding="8dp"
+                        android:scaleType="centerInside"/>
+
+                    <!-- Text Container -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5 kWh/10 kWh"
+                            android:textColor="@android:color/black"
+                            android:textSize="13sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sisa energi"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
 <!--                History-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="History"
+                        android:textSize="24sp"
+                        android:layout_weight="1"
+                        android:textStyle="bold"
+                        android:textColor="#000000"
+                        android:layout_marginBottom="20dp" />
 
-                        android:orientation="horizontal">
+                    <!-- Month Spinner -->
+                    <TextView
+                        android:id="@+id/spinner_month_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:minWidth="180dp"
+                        android:background="@drawable/listrik_spinner_bg"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:clickable="true"
+                        android:focusable="true" />
 
-                        <!-- Title -->
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="History"
-                            android:textSize="24sp"
-                            android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:textColor="#000000"
-                            android:layout_marginBottom="20dp" />
+                </LinearLayout>
 
-                        <!-- Month Spinner -->
-                        <TextView
-                            android:id="@+id/spinner_month_year"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:minWidth="180dp"
-                            android:background="@drawable/listrik_spinner_bg"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:gravity="center_vertical"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp"
-                            android:clickable="true"
-                            android:focusable="true" />
+                <!-- Chart Container -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
-                    </LinearLayout>
-
-                    <!-- Chart Container -->
-                    <LinearLayout
+                    <!-- Chart Bars Container - Using FrameLayout for overlay -->
+                    <FrameLayout
+                        android:id="@+id/chart_frame_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
+                        android:layout_height="320dp"
+                        android:layout_marginBottom="16dp"
                         android:clipChildren="false"
                         android:clipToPadding="false">
 
-                        <!-- Chart Bars Container - Using FrameLayout for overlay -->
-                        <FrameLayout
-                            android:id="@+id/chart_frame_container"
+                        <!-- Bars Container -->
+                        <LinearLayout
+                            android:id="@+id/chart_container"
                             android:layout_width="match_parent"
-                            android:layout_height="320dp"
-                            android:layout_marginBottom="16dp"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="bottom|center_horizontal"
+                            android:paddingTop="50dp"
                             android:clipChildren="false"
                             android:clipToPadding="false">
 
-                            <!-- Bars Container -->
+                            <!-- Sen Bar -->
                             <LinearLayout
-                                android:id="@+id/chart_container"
-                                android:layout_width="match_parent"
+                                android:id="@+id/bar_container_sen"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
                                 android:gravity="bottom|center_horizontal"
-                                android:paddingTop="50dp"
-                                android:clipChildren="false"
-                                android:clipToPadding="false">
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="4dp"
+                                android:clickable="true"
+                                android:focusable="true">
 
-                                <!-- Sen Bar -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_sen"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_sen"
-                                        android:layout_width="32dp"
-                                        android:layout_height="60dp"
-                                        android:background="@drawable/listrik_history_gray_bar_background"
-                                        android:tag="0.6" />
-                                </LinearLayout>
-
-                                <!-- Sel Bar -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_sel"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_sel"
-                                        android:layout_width="32dp"
-                                        android:layout_height="100dp"
-                                        android:background="@drawable/listrik_history_gray_bar_background"
-                                        android:tag="1.0" />
-                                </LinearLayout>
-
-                                <!-- Rab Bar -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_rab"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_rab"
-                                        android:layout_width="32dp"
-                                        android:layout_height="140dp"
-                                        android:background="@drawable/listrik_history_gray_bar_background"
-                                        android:tag="1.4" />
-                                </LinearLayout>
-
-                                <!-- Kam Bar (Highlighted - Default Active) -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_kam"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_kam"
-                                        android:layout_width="32dp"
-                                        android:layout_height="240dp"
-                                        android:background="@drawable/listrik_history_blue_bar_background"
-                                        android:tag="2.4" />
-                                </LinearLayout>
-
-                                <!-- Jum Bar -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_jum"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_jum"
-                                        android:layout_width="32dp"
-                                        android:layout_height="20dp"
-                                        android:background="@drawable/listrik_history_gray_bar_background"
-                                        android:tag="0.2" />
-                                </LinearLayout>
-
-                                <!-- Sab Bar -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_sab"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_sab"
-                                        android:layout_width="32dp"
-                                        android:layout_height="20dp"
-                                        android:background="@drawable/listrik_history_gray_bar_background"
-                                        android:tag="0.0" />
-                                </LinearLayout>
-
-                                <!-- Ming Bar -->
-                                <LinearLayout
-                                    android:id="@+id/bar_container_ming"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical"
-                                    android:gravity="bottom|center_horizontal"
-                                    android:layout_marginHorizontal="4dp"
-                                    android:clickable="true"
-                                    android:focusable="true">
-
-                                    <View
-                                        android:id="@+id/bar_ming"
-                                        android:layout_width="32dp"
-                                        android:layout_height="20dp"
-                                        android:background="@drawable/listrik_history_gray_bar_background"
-                                        android:tag="0.0" />
-                                </LinearLayout>
-
+                                <View
+                                    android:id="@+id/bar_sen"
+                                    android:layout_width="24dp"
+                                    android:layout_height="60dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
+                                    android:tag="0.6" />
                             </LinearLayout>
 
-                        </FrameLayout>
-
-                        <!-- Day Labels -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
+                            <!-- Sel Bar -->
+                            <LinearLayout
+                                android:id="@+id/bar_container_sel"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="Sen"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#666666" />
+                                android:orientation="vertical"
+                                android:gravity="bottom|center_horizontal"
+                                android:layout_marginHorizontal="4dp"
+                                android:clickable="true"
+                                android:focusable="true">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Sel"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#666666" />
+                                <View
+                                    android:id="@+id/bar_sel"
+                                    android:layout_width="24dp"
+                                    android:layout_height="100dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
+                                    android:tag="1.0" />
+                            </LinearLayout>
 
-                            <TextView
+                            <!-- Rab Bar -->
+                            <LinearLayout
+                                android:id="@+id/bar_container_rab"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="Rab"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#666666" />
+                                android:orientation="vertical"
+                                android:gravity="bottom|center_horizontal"
+                                android:layout_marginHorizontal="4dp"
+                                android:clickable="true"
+                                android:focusable="true">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="Kam"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#000000"
-                                android:textStyle="bold" />
+                                <View
+                                    android:id="@+id/bar_rab"
+                                    android:layout_width="24dp"
+                                    android:layout_height="140dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
+                                    android:tag="1.4" />
+                            </LinearLayout>
 
-                            <TextView
+                            <!-- Kam Bar (Highlighted - Default Active) -->
+                            <LinearLayout
+                                android:id="@+id/bar_container_kam"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="Jum"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#666666" />
+                                android:orientation="vertical"
+                                android:gravity="bottom|center_horizontal"
+                                android:layout_marginHorizontal="4dp"
+                                android:clickable="true"
+                                android:focusable="true">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="sab"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#666666" />
+                                <View
+                                    android:id="@+id/bar_kam"
+                                    android:layout_width="24dp"
+                                    android:layout_height="240dp"
+                                    android:background="@drawable/listrik_history_blue_bar_background"
+                                    android:tag="2.4" />
+                            </LinearLayout>
 
-                            <TextView
+                            <!-- Jum Bar -->
+                            <LinearLayout
+                                android:id="@+id/bar_container_jum"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:text="Ming"
-                                android:gravity="center"
-                                android:textSize="14sp"
-                                android:textColor="#666666" />
+                                android:orientation="vertical"
+                                android:gravity="bottom|center_horizontal"
+                                android:layout_marginHorizontal="4dp"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <View
+                                    android:id="@+id/bar_jum"
+                                    android:layout_width="24dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
+                                    android:tag="0.2" />
+                            </LinearLayout>
+
+                            <!-- Sab Bar -->
+                            <LinearLayout
+                                android:id="@+id/bar_container_sab"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="bottom|center_horizontal"
+                                android:layout_marginHorizontal="4dp"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <View
+                                    android:id="@+id/bar_sab"
+                                    android:layout_width="24dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
+                                    android:tag="0.0" />
+                            </LinearLayout>
+
+                            <!-- Ming Bar -->
+                            <LinearLayout
+                                android:id="@+id/bar_container_ming"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="bottom|center_horizontal"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="20dp"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <View
+                                    android:id="@+id/bar_ming"
+                                    android:layout_width="24dp"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
+                                    android:tag="0.0" />
+                            </LinearLayout>
+
                         </LinearLayout>
+
+                        <!-- Floating Value Label - Removed elevation to eliminate gray shadow -->
+                        <LinearLayout
+                            android:id="@+id/value_label_kam"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/listrik_history_blue_bubble_background"
+                            android:padding="8dp"
+                            android:visibility="visible">
+                            <TextView
+                                android:id="@+id/value_label_text_kam"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2.4 kWh"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="#FFFFFF"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <!-- Day Labels -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Sen"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Sel"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Rab"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Kam"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Jum"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="sab"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Ming"
+                            android:gravity="center"
+                            android:textSize="14sp"
+                            android:textColor="#666666" />
                     </LinearLayout>
+                </LinearLayout>
 <!--                    History-->
 
 
 <!--                    Perangkat terhubung-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perangkat terhubung"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="20dp"
+                        android:textColor="#000000"
+                        android:layout_marginBottom="20dp" />
+
+                    <!-- Lampu Device -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="24dp">
 
-                        <!-- Title -->
-                        <TextView
+                        <!-- Icon -->
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/lampu_img"
+                            android:layout_marginEnd="16dp" />
+
+                        <!-- Device Info -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lampu"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="14 Perangkat"
+                                android:textSize="14sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                        <!-- Usage Info -->
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Perangkat terhubung"
-                            android:textSize="24sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp"
-                            android:textColor="#000000"
-                            android:layout_marginBottom="20dp" />
+                            android:orientation="vertical"
+                            android:gravity="end">
 
-                        <!-- Lampu Device -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginBottom="24dp">
-
-                            <!-- Icon -->
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:src="@drawable/lampu_img"
-                                android:layout_marginEnd="16dp" />
-
-                            <!-- Device Info -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Lampu"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000000" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="14 Perangkat"
-                                    android:textSize="14sp"
-                                    android:textColor="#666666"
-                                    android:layout_marginTop="2dp" />
-
-                            </LinearLayout>
-
-                            <!-- Usage Info -->
-                            <LinearLayout
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:gravity="end">
+                                android:text="8"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="8"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000000" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="kWh Digunakan"
-                                    android:textSize="12sp"
-                                    android:textColor="#666666"
-                                    android:layout_marginTop="2dp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <!-- Pendeteksi asap Device -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginBottom="24dp">
-
-                            <!-- Icon -->
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:src="@drawable/pendeteksi_asap_img"
-                                android:layout_marginEnd="16dp" />
-
-                            <!-- Device Info -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Pendeteksi asap"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000000" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="1 Perangkat"
-                                    android:textSize="14sp"
-                                    android:textColor="#666666"
-                                    android:layout_marginTop="2dp" />
-
-                            </LinearLayout>
-
-                            <!-- Usage Info -->
-                            <LinearLayout
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:gravity="end">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0,5"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000000" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="kWh Digunakan"
-                                    android:textSize="12sp"
-                                    android:textColor="#666666"
-                                    android:layout_marginTop="2dp" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <!-- Pendeteksi level air Device -->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical">
-
-                            <!-- Icon -->
-                            <ImageView
-                                android:layout_width="48dp"
-                                android:layout_height="48dp"
-                                android:src="@drawable/level_air_img"
-                                android:layout_marginEnd="16dp" />
-
-                            <!-- Device Info -->
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Pendeteksi level air"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000000" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="1 Perangkat"
-                                    android:textSize="14sp"
-                                    android:textColor="#666666"
-                                    android:layout_marginTop="2dp" />
-
-                            </LinearLayout>
-
-                            <!-- Usage Info -->
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:gravity="end">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="0,9"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#000000" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="kWh Digunakan"
-                                    android:textSize="12sp"
-                                    android:textColor="#666666"
-                                    android:layout_marginTop="2dp" />
-
-                            </LinearLayout>
+                                android:text="kWh Digunakan"
+                                android:textSize="12sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="2dp" />
 
                         </LinearLayout>
 
                     </LinearLayout>
 
+                    <!-- Pendeteksi asap Device -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="24dp">
+
+                        <!-- Icon -->
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/pendeteksi_asap_img"
+                            android:layout_marginEnd="16dp" />
+
+                        <!-- Device Info -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pendeteksi asap"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 Perangkat"
+                                android:textSize="14sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                        <!-- Usage Info -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="end">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0,5"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="kWh Digunakan"
+                                android:textSize="12sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Pendeteksi level air Device -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <!-- Icon -->
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/level_air_img"
+                            android:layout_marginEnd="16dp" />
+
+                        <!-- Device Info -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pendeteksi level air"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 Perangkat"
+                                android:textSize="14sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                        <!-- Usage Info -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="end">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0,9"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="kWh Digunakan"
+                                android:textSize="12sp"
+                                android:textColor="#666666"
+                                android:layout_marginTop="2dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
 
 <!--                    Perangkat terhubung-->
-                </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-
-    <!-- Floating Value Label (HIGHEST Z-INDEX - overlay on entire screen) -->
+    <!-- Header fixed at top with highest z-index (drawn last = on top) -->
     <LinearLayout
-        android:id="@+id/value_label_kam"
-        android:layout_width="wrap_content"
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/listrik_history_blue_bubble_background"
-        android:padding="8dp"
-        android:visibility="visible"
-        android:elevation="16dp"
-        android:translationZ="16dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_back"
+            android:contentDescription="Back"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="12dp"
+            android:src="@drawable/logo_img"
+            android:contentDescription="Avara Logo" />
+
         <TextView
-            android:id="@+id/value_label_text_kam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2.4 kWh"
-            android:layout_marginBottom="10dp"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="8dp"
+            android:text="Avara"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#0092DC"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="Monitoring ruangan"
+            android:textSize="18sp"
+            android:textColor="#333333"
+            android:fontFamily="sans-serif-medium" />
     </LinearLayout>
 
 </FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.smarthome
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -43,69 +44,63 @@ class MonitoringListrikActivity : AppCompatActivity() {
             "Juli", "Agustus", "September", "Oktober", "November", "Desember"
         )
 
-        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
-        val years = (2025..currentYear).toList()
+        // Dapatkan tanggal saat ini
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH)
 
-        // Generate list bulan-tahun
-        val monthYearList = mutableListOf<String>()
-        for (year in years.reversed()) {
-            for (month in months) {
-                monthYearList.add("$month $year")
-            }
-        }
-
-        // Setup adapter (digunakan oleh ListPopupWindow)
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_list_item_1,
-            monthYearList
-        )
-
-        // Anchor adalah TextView dengan id spinner_month_year (diganti di layout)
         val anchor = binding.spinnerMonthYear
 
-        // Hitung ukuran dalam px - kurangi tinggi agar hanya 3 item terlihat
-        val density = resources.displayMetrics.density
-        val heightPx = (120 * density + 0.5f).toInt() // Dikurangi dari 144dp ke 120dp untuk memastikan hanya ~3 item
-        val minWidthPx = (180 * density + 0.5f).toInt()
-
-        // Buat ListPopupWindow agar kita bisa mengontrol tinggi popup
-        val listPopup = ListPopupWindow(this)
-        listPopup.anchorView = anchor
-        listPopup.setAdapter(adapter)
-        listPopup.height = heightPx
-        listPopup.width = minWidthPx
-        listPopup.isModal = true
-
-        // Set default ke bulan dan tahun saat ini pada anchor (TextView)
-        val currentMonth = Calendar.getInstance().get(Calendar.MONTH)
+        // Set default ke bulan dan tahun saat ini
         val defaultSelection = "${months[currentMonth]} $currentYear"
         anchor.text = defaultSelection
 
-        // Handler ketika item dipilih di popup
-        listPopup.setOnItemClickListener { _, _, position, _ ->
-            val selected = monthYearList[position]
-            anchor.text = selected
-
-            val parts = selected.split(" ")
-            val month = parts[0]
-            val year = parts[1].toInt()
-
-            // Tutup popup lalu update chart
-            listPopup.dismiss()
-            updateChartData(month, year)
-        }
-
-        // Tampilkan popup ketika anchor diklik
+        // Tampilkan DatePicker ketika anchor diklik
         anchor.setOnClickListener {
-            // Jika lebar anchor belum di-measure, atur width popup minimal
-            if (anchor.width > 0) {
-                listPopup.width = anchor.width
-            }
-            listPopup.show()
-        }
+            // Buat calendar untuk DatePicker dengan nilai saat ini yang dipilih
+            val pickerCalendar = Calendar.getInstance()
 
-        // Catatan: jumlah item yang terlihat dibatasi menjadi 3 dan dapat discroll via height di ListPopupWindow (120dp)
+            // Parse text yang sedang ditampilkan untuk mendapatkan bulan dan tahun
+            val currentText = anchor.text.toString()
+            val parts = currentText.split(" ")
+            if (parts.size == 2) {
+                val monthIndex = months.indexOf(parts[0])
+                val year = parts[1].toIntOrNull()
+                if (monthIndex >= 0 && year != null) {
+                    pickerCalendar.set(Calendar.YEAR, year)
+                    pickerCalendar.set(Calendar.MONTH, monthIndex)
+                }
+            }
+
+            // Buat DatePickerDialog
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { _, year, month, _ ->
+                    // Handler ketika tanggal dipilih
+                    val selectedMonth = months[month]
+                    val selected = "$selectedMonth $year"
+                    anchor.text = selected
+
+                    // Update chart dengan data baru
+                    updateChartData(selectedMonth, year)
+                },
+                pickerCalendar.get(Calendar.YEAR),
+                pickerCalendar.get(Calendar.MONTH),
+                1 // Hari tidak terlalu penting, set ke 1
+            )
+
+            // Atur range tahun yang bisa dipilih (opsional)
+            datePickerDialog.datePicker.minDate = Calendar.getInstance().apply {
+                set(Calendar.YEAR, 2020)
+                set(Calendar.MONTH, 0)
+                set(Calendar.DAY_OF_MONTH, 1)
+            }.timeInMillis
+
+            datePickerDialog.datePicker.maxDate = Calendar.getInstance().timeInMillis
+
+            // Tampilkan dialog
+            datePickerDialog.show()
+        }
     }
 
     private fun updateChartData(month: String, year: Int) {

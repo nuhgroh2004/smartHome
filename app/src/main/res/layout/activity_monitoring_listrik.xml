@@ -212,7 +212,7 @@
                                 <View
                                     android:id="@+id/bar_sen"
                                     android:layout_width="24dp"
-                                    android:layout_height="60dp"
+                                    android:layout_height="20dp"
                                     android:background="@drawable/listrik_history_gray_bar_background"
                                     android:tag="0.6" />
                             </LinearLayout>
@@ -232,7 +232,7 @@
                                 <View
                                     android:id="@+id/bar_sel"
                                     android:layout_width="24dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="20dp"
                                     android:background="@drawable/listrik_history_gray_bar_background"
                                     android:tag="1.0" />
                             </LinearLayout>
@@ -252,7 +252,7 @@
                                 <View
                                     android:id="@+id/bar_rab"
                                     android:layout_width="24dp"
-                                    android:layout_height="140dp"
+                                    android:layout_height="20dp"
                                     android:background="@drawable/listrik_history_gray_bar_background"
                                     android:tag="1.4" />
                             </LinearLayout>
@@ -272,8 +272,8 @@
                                 <View
                                     android:id="@+id/bar_kam"
                                     android:layout_width="24dp"
-                                    android:layout_height="240dp"
-                                    android:background="@drawable/listrik_history_blue_bar_background"
+                                    android:layout_height="20dp"
+                                    android:background="@drawable/listrik_history_gray_bar_background"
                                     android:tag="2.4" />
                             </LinearLayout>
 
@@ -358,6 +358,22 @@
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
+
+                        <!-- Loading Indicator -->
+                        <FrameLayout
+                            android:id="@+id/loading_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#CCFFFFFF"
+                            android:visibility="gone">
+
+                            <ProgressBar
+                                android:id="@+id/loading_progress"
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:indeterminateTint="#2196F3" />
+                        </FrameLayout>
 
                     </FrameLayout>
 

@@ -14,8 +14,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smarthome.databinding.ActivityMonitoringListrikBinding
 import com.example.smarthome.model.ElectricityHistoryModel
+import com.example.smarthome.model.MonthlyElectricityHistoryModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -40,13 +43,30 @@ class MonitoringListrikActivity : AppCompatActivity() {
     private var isAutoRefreshEnabled = true
     private val REFRESH_INTERVAL = 3000L // 3 detik
 
+    init {
+        // Enable offline persistence for Firestore
+        try {
+            val settings = FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
+                .build()
+            firestore.firestoreSettings = settings
+            Log.d("MonitoringListrik", "Firestore offline persistence enabled")
+        } catch (e: Exception) {
+            Log.e("MonitoringListrik", "Error enabling offline persistence: ${e.message}")
+        }
+    }
+
     private val refreshRunnable = object : Runnable {
         override fun run() {
             if (isAutoRefreshEnabled && !isLoading) {
                 Log.d("MonitoringListrik", "Auto-refresh: updating data...")
-                // Clear cache untuk force refresh dari Firestore
+                // Refresh weekly data
                 val currentDate = calendar.clone() as Calendar
                 loadElectricityDataForWeek(currentDate, forceRefresh = true)
+
+                // Refresh monthly cost
+                loadMonthlyCostData()
             }
             // Schedule next refresh
             if (isAutoRefreshEnabled) {
@@ -133,6 +153,9 @@ class MonitoringListrikActivity : AppCompatActivity() {
     private fun loadInitialData() {
         // Load data untuk minggu ini (dari hari ini)
         loadElectricityDataForWeek(calendar)
+
+        // Load monthly cost data
+        loadMonthlyCostData()
     }
 
     private fun setupMonthYearSpinner() {
@@ -558,5 +581,68 @@ class MonitoringListrikActivity : AppCompatActivity() {
         binding.valueLabelTextKam.text = display
 
         Log.d("MonitoringListrik", "Label updated: $display")
+    }
+
+    /**
+     * Load data total biaya bulanan dari Firestore
+     */
+    private fun loadMonthlyCostData() {
+        // Get current year and month
+        val currentYear = calendar.get(Calendar.YEAR)
+        val currentMonth = calendar.get(Calendar.MONTH) + 1 // Calendar.MONTH is 0-based
+
+        // Format document ID: "2025-10"
+        val documentId = String.format("%d-%02d", currentYear, currentMonth)
+
+        Log.d("MonitoringListrik", "Loading monthly cost for: $documentId")
+
+        // Query Firestore untuk mendapatkan data biaya bulanan
+        firestore.collection("monthly_electricity_history")
+            .document(documentId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    try {
+                        val monthlyData = document.toObject(MonthlyElectricityHistoryModel::class.java)
+                        if (monthlyData != null) {
+                            // Format biaya dalam Rupiah
+                            val totalBiaya = monthlyData.totalBiaya_Rp
+                            val formattedBiaya = formatCurrency(totalBiaya)
+
+                            // Update UI
+                            binding.savedCostText.text = formattedBiaya
+
+                            Log.d("MonitoringListrik", "Monthly cost loaded: Rp $totalBiaya -> $formattedBiaya")
+                        } else {
+                            binding.savedCostText.text = "Rp 0"
+                            Log.w("MonitoringListrik", "Monthly data is null")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("MonitoringListrik", "Error parsing monthly data: ${e.message}")
+                        binding.savedCostText.text = "Rp 0"
+                    }
+                } else {
+                    // Document tidak ada, tampilkan Rp 0
+                    binding.savedCostText.text = "Rp 0"
+                    Log.d("MonitoringListrik", "No monthly data found for $documentId")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("MonitoringListrik", "Error getting monthly cost: ", exception)
+                binding.savedCostText.text = "Rp 0"
+            }
+    }
+
+    /**
+     * Format angka menjadi format Rupiah
+     */
+    private fun formatCurrency(amount: Double): String {
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        // Remove decimal if it's .00
+        return if (amount % 1.0 == 0.0) {
+            "Rp ${String.format("%,.0f", amount)}"
+        } else {
+            numberFormat.format(amount).replace("Rp", "Rp ")
+        }
     }
 }

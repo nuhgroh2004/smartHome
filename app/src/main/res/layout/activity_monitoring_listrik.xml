@@ -59,9 +59,10 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/saved_cost_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Rp 500.000"
+                            android:text="Rp 000.000"
                             android:textColor="@android:color/black"
                             android:textSize="13sp"
                             android:textStyle="bold"/>

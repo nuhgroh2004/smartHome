@@ -1,23 +1,21 @@
 package com.example.smarthome
 
-import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smarthome.databinding.ActivityMonitoringTandonAirBinding
 import com.example.smarthome.databinding.ActivityNotificationBinding
-import com.example.smarthome.model.NotificationModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NotificationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationBinding
     private lateinit var recyclerView: RecyclerView
     private lateinit var notificationAdapter: NotificationAdapter
+    private lateinit var notificationDb: NotificationDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +28,37 @@ class NotificationActivity : AppCompatActivity() {
             insets
         }
 
+        // Inisialisasi database
+        notificationDb = NotificationDatabase(this)
+
         setupRecyclerView()
 
         // Setup back button
-        findViewById<android.widget.ImageView>(R.id.btn_back).setOnClickListener {
-            finish()
-        }
-
-
         binding.btnBack.setOnClickListener {
             finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh data setiap kali activity muncul
+        loadNotifications()
+        // Mark semua notifikasi sebagai sudah dibaca saat user melihat halaman ini
+        markAllNotificationsAsRead()
+    }
+
+    private fun markAllNotificationsAsRead() {
+        // Ambil semua notifikasi yang belum dibaca
+        val notifications = notificationDb.getAllNotifications()
+        val hasUnread = notifications.any { !it.isRead }
+
+        if (hasUnread) {
+            // Mark semua sebagai sudah dibaca
+            notificationDb.markAllAsRead()
+            // Refresh UI untuk menghilangkan unread indicator
+            Handler(Looper.getMainLooper()).postDelayed({
+                loadNotifications()
+            }, 300) // Delay sedikit agar transisi terlihat smooth
         }
     }
 
@@ -47,64 +66,43 @@ class NotificationActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.rv_notifications)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val notifications = generateDummyNotifications()
-        notificationAdapter = NotificationAdapter(notifications)
-        recyclerView.adapter = notificationAdapter
-    }
-
-    private fun generateDummyNotifications(): List<NotificationModel> {
-        val notifications = mutableListOf<NotificationModel>()
-        val calendar = Calendar.getInstance()
-
-        // Generate 50 dummy notifications untuk testing scroll
-        for (i in 1..50) {
-            val isWaterNotification = i % 3 == 0 // Setiap 3 item akan jadi notifikasi air
-
-            if (isWaterNotification) {
-                notifications.add(
-                    NotificationModel(
-                        id = i,
-                        title = "Tandon Air",
-                        message = "Tandon air sudah penuh",
-                        timestamp = generateTimestamp(calendar, i),
-                        isRead = i % 5 != 0 // Setiap 5 item akan unread
-                    )
-                )
-            } else {
-                notifications.add(
-                    NotificationModel(
-                        id = i,
-                        title = "Pendeteksi Asap",
-                        message = "Asap terdeteksi berpotensi kebakaran",
-                        timestamp = generateTimestamp(calendar, i),
-                        isRead = i % 4 != 0 // Setiap 4 item akan unread
-                    )
-                )
-            }
+        // Buat adapter tanpa callback click karena tidak diperlukan lagi
+        notificationAdapter = NotificationAdapter(emptyList()) { notification ->
+            // Item click handler - bisa dikosongkan atau digunakan untuk aksi lain
+            // Tidak perlu mark as read karena sudah otomatis saat activity dibuka
         }
+        recyclerView.adapter = notificationAdapter
 
-        return notifications.sortedBy { it.id } // Sort terbaru dulu (id kecil = terbaru)
+        // Load notifikasi dari database
+        loadNotifications()
     }
 
-    private fun generateTimestamp(calendar: Calendar, index: Int): String {
-        calendar.add(Calendar.HOUR_OF_DAY, -index) // Mundur beberapa jam untuk setiap item
+    private fun loadNotifications() {
+        // Ambil semua notifikasi dari database lokal
+        val notifications = notificationDb.getAllNotifications()
 
-        val now = Calendar.getInstance()
-        val diff = now.timeInMillis - calendar.timeInMillis
-        val hours = diff / (1000 * 60 * 60)
-        val days = hours / 24
+        // Jika tidak ada data di database, generate dummy data untuk testing
+        if (notifications.isEmpty()) {
+            generateDummyNotifications()
+            // Ambil lagi setelah generate dummy
+            notificationAdapter.updateData(notificationDb.getAllNotifications())
+        } else {
+            notificationAdapter.updateData(notifications)
+        }
+    }
 
-        return when {
-            hours < 1 -> "Baru saja"
-            hours < 24 -> "${hours}j yang lalu"
-            days == 1L -> "Kemarin"
-            days < 30 -> "${days} hari lalu"
-            else -> {
-                val sdf = SimpleDateFormat("dd MMM", Locale.getDefault())
-                sdf.format(calendar.time)
-            }
-        }.also {
-            calendar.add(Calendar.HOUR_OF_DAY, index) // Reset calendar
+    private fun generateDummyNotifications() {
+        // Generate dummy data untuk testing (hanya jika database kosong)
+        val dummyData = listOf(
+            "Sensor Asap" to "Asap terdeteksi berpotensi kebakaran",
+            "Tandon Air" to "Tandon air penuh",
+            "Sensor Asap" to "Asap terdeteksi berpotensi kebakaran",
+            "Tandon Air" to "Tandon air penuh",
+            "Sensor Asap" to "Asap terdeteksi berpotensi kebakaran"
+        )
+
+        dummyData.forEach { (title, message) ->
+            notificationDb.saveNotification(title, message)
         }
     }
 }

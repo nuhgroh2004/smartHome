@@ -25,13 +25,14 @@ import android.view.View
 import android.animation.ObjectAnimator
 import android.animation.AnimatorSet
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationChangeListener {
     private lateinit var binding: ActivityHomeBinding
     private var doubleBackToExitPressedOnce = false
 
     private lateinit var firebase:FirebaseDatabase
     // Add dispatcher callback reference
     private lateinit var backPressedCallback: OnBackPressedCallback
+    private lateinit var notificationDb: NotificationDatabase
 
     // Permission launcher for POST_NOTIFICATIONS (Android 13+)
     private val requestNotificationPermissionLauncher =
@@ -52,6 +53,12 @@ class HomeActivity : AppCompatActivity() {
 
         // Request notification permission on Android 13+
         requestNotificationPermissionIfNeeded()
+
+        // Inisialisasi notification database
+        notificationDb = NotificationDatabase(this)
+
+        // Register listener untuk update real-time
+        NotificationDatabase.addListener(this)
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -123,6 +130,31 @@ class HomeActivity : AppCompatActivity() {
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
     }
 
+    // Callback dari listener saat ada perubahan notifikasi
+    override fun onNotificationChanged() {
+        // Update badge di UI thread
+        runOnUiThread {
+            updateNotificationBadge()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Update badge setiap kali activity muncul
+        updateNotificationBadge()
+    }
+
+    private fun updateNotificationBadge() {
+        val unreadCount = notificationDb.getUnreadCount()
+
+        if (unreadCount > 0) {
+            binding.tvNotificationBadge.visibility = View.VISIBLE
+            binding.tvNotificationBadge.text = if (unreadCount > 99) "99+" else unreadCount.toString()
+        } else {
+            binding.tvNotificationBadge.visibility = View.GONE
+        }
+    }
+
     private fun requestNotificationPermissionIfNeeded() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             when {
@@ -179,6 +211,8 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        // Unregister listener saat activity di destroy
+        NotificationDatabase.removeListener(this)
         if (this::backPressedCallback.isInitialized) backPressedCallback.remove()
     }
 

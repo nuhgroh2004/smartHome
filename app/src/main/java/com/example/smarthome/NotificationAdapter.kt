@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.smarthome.model.NotificationModel
 
 class NotificationAdapter(
-    private val notifications: List<NotificationModel>
+    private var notifications: List<NotificationModel>,
+    private val onItemClick: (NotificationModel) -> Unit
 ) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
 
     inner class NotificationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -35,11 +36,12 @@ class NotificationAdapter(
 
         // Set icon berdasarkan title atau tipe notifikasi
         when {
-            notification.title.contains("Tandon", ignoreCase = true) -> {
+            notification.title.contains("Tandon", ignoreCase = true) ||
+            notification.title.contains("Air", ignoreCase = true) -> {
                 holder.iconImageView.setImageResource(R.drawable.notification_toren_air_img)
             }
             notification.title.contains("Asap", ignoreCase = true) ||
-            notification.title.contains("Pening", ignoreCase = true) -> {
+            notification.title.contains("Sensor", ignoreCase = true) -> {
                 holder.iconImageView.setImageResource(R.drawable.notification_asap_img)
             }
             else -> {
@@ -47,9 +49,20 @@ class NotificationAdapter(
             }
         }
 
-        // Show/hide unread indicator
+        // Show/hide unread indicator berdasarkan status isRead
         holder.unreadIndicator.visibility = if (notification.isRead) View.GONE else View.VISIBLE
+
+        // Handle click untuk mark as read
+        holder.itemView.setOnClickListener {
+            onItemClick(notification)
+        }
     }
 
     override fun getItemCount(): Int = notifications.size
+
+    // Method untuk update data
+    fun updateData(newNotifications: List<NotificationModel>) {
+        notifications = newNotifications
+        notifyDataSetChanged()
+    }
 }

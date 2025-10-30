@@ -55,6 +55,10 @@ class AppFirebaseMessagingService : FirebaseMessagingService() {
                 ?: remoteMessage.data["message"]
                 ?: ""
 
+            // Simpan notifikasi ke database lokal
+            val notificationDb = NotificationDatabase(this)
+            notificationDb.saveNotification(title, body)
+
             // Build intent to open NotificationActivity when user taps the notification
             val intent = Intent(this, NotificationActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

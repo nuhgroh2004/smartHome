@@ -42,13 +42,12 @@ class MonitoringListrikActivity : AppCompatActivity() {
     init {
         try {
             val settings = FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED)
                 .build()
             firestore.firestoreSettings = settings
-            Log.d("MonitoringListrik", "Firestore offline persistence enabled")
+            firestore.enableNetwork()
+            Log.d("MonitoringListrik", "Firestore configured successfully")
         } catch (e: Exception) {
-            Log.e("MonitoringListrik", "Error enabling offline persistence: ${e.message}")
+            Log.e("MonitoringListrik", "Error configuring Firestore: ${e.message}")
         }
     }
 

@@ -338,7 +338,6 @@ class ControlLampuActivity : AppCompatActivity() {
         thumbView.setBackgroundResource(R.drawable.toggle_thumb_on)
         toggleSwitch.addView(toggleText)
         toggleSwitch.addView(thumbView)
-
         updateContainerTextColors(lampContainer, true)
     }
 

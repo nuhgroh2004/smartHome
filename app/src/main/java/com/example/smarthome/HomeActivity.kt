@@ -23,16 +23,11 @@ import android.animation.AnimatorSet
 class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationChangeListener {
     private lateinit var binding: ActivityHomeBinding
     private var doubleBackToExitPressedOnce = false
-
-    // Add dispatcher callback reference
     private lateinit var backPressedCallback: OnBackPressedCallback
     private lateinit var notificationDb: NotificationDatabase
-
-    // Permission launcher for POST_NOTIFICATIONS (Android 13+)
     private val requestNotificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                // Ensure notification channel exists
                 NotificationHelper.createNotificationChannel(this)
             } else {
                 Toast.makeText(this, "Izin notifikasi ditolak. Anda tidak akan menerima pemberitahuan.", Toast.LENGTH_LONG).show()
@@ -44,23 +39,14 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
-
-        // Request notification permission on Android 13+
         requestNotificationPermissionIfNeeded()
-
-        // Inisialisasi notification database
         notificationDb = NotificationDatabase(this)
-
-        // Register listener untuk update real-time
         NotificationDatabase.addListener(this)
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        // Handle system back press using OnBackPressedDispatcher
         backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (doubleBackToExitPressedOnce) {
@@ -112,9 +98,7 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
     }
 
-    // Callback dari listener saat ada perubahan notifikasi
     override fun onNotificationChanged() {
-        // Update badge di UI thread
         runOnUiThread {
             updateNotificationBadge()
         }
@@ -122,13 +106,11 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
 
     override fun onResume() {
         super.onResume()
-        // Update badge setiap kali activity muncul
         updateNotificationBadge()
     }
 
     private fun updateNotificationBadge() {
         val unreadCount = notificationDb.getUnreadCount()
-
         if (unreadCount > 0) {
             binding.tvNotificationBadge.visibility = View.VISIBLE
             binding.tvNotificationBadge.text = if (unreadCount > 99) "99+" else unreadCount.toString()
@@ -141,25 +123,20 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             when {
                 ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED -> {
-                    // Already granted
                     NotificationHelper.createNotificationChannel(this)
                 }
                 shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS) -> {
-                    // You may show a rationale to the user and then request permission
                     requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
                 else -> {
-                    // Directly request permission
                     requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         } else {
-            // Pre Android 13: ensure channel exists
             NotificationHelper.createNotificationChannel(this)
         }
     }
 
-    // Fungsi untuk animasi klik
     private fun animateClick(view: View, action: () -> Unit) {
         val scaleDown = AnimatorSet().apply {
             playTogether(
@@ -176,7 +153,6 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
             )
             duration = 100
         }
-
         scaleDown.start()
         scaleDown.addListener(object : android.animation.Animator.AnimatorListener {
             override fun onAnimationStart(animation: android.animation.Animator) {}
@@ -193,7 +169,6 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
 
     override fun onDestroy() {
         super.onDestroy()
-        // Unregister listener saat activity di destroy
         NotificationDatabase.removeListener(this)
         if (this::backPressedCallback.isInitialized) backPressedCallback.remove()
     }

@@ -91,7 +91,6 @@ class MonitoringListrikActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        // Stop auto-refresh when activity is not visible
         stopAutoRefresh()
         Log.d("MonitoringListrik", "Auto-refresh stopped")
     }

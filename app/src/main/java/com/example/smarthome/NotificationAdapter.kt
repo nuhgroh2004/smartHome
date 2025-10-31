@@ -29,12 +29,9 @@ class NotificationAdapter(
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
         val notification = notifications[position]
-
         holder.titleTextView.text = notification.title
         holder.messageTextView.text = notification.message
         holder.timestampTextView.text = notification.timestamp
-
-        // Set icon berdasarkan title atau tipe notifikasi
         when {
             notification.title.contains("Tandon", ignoreCase = true) ||
             notification.title.contains("Air", ignoreCase = true) -> {
@@ -48,19 +45,13 @@ class NotificationAdapter(
                 holder.iconImageView.setImageResource(R.drawable.notification_toren_air_img)
             }
         }
-
-        // Show/hide unread indicator berdasarkan status isRead
         holder.unreadIndicator.visibility = if (notification.isRead) View.GONE else View.VISIBLE
-
-        // Handle click untuk mark as read
         holder.itemView.setOnClickListener {
             onItemClick(notification)
         }
     }
 
     override fun getItemCount(): Int = notifications.size
-
-    // Method untuk update data
     fun updateData(newNotifications: List<NotificationModel>) {
         notifications = newNotifications
         notifyDataSetChanged()

@@ -17,9 +17,7 @@ object NotificationHelper {
     fun createNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val manager = context.getSystemService(NotificationManager::class.java)
-            // If channel already exists, do nothing
             if (manager.getNotificationChannel(CHANNEL_ID) != null) return
-
             val channel = NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
@@ -50,7 +48,6 @@ object NotificationHelper {
         playSound: Boolean = true
     ) {
         val soundUri = if (playSound) RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION) else null
-
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.logo_icon_apk)
             .setContentTitle(title)
@@ -61,11 +58,8 @@ object NotificationHelper {
             .setOngoing(ongoing)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
-
         if (soundUri != null) builder.setSound(soundUri)
-        // Show lights/vibrate/defaults for extra presence
         builder.setDefaults(android.app.Notification.DEFAULT_LIGHTS or android.app.Notification.DEFAULT_VIBRATE)
-
         with(NotificationManagerCompat.from(context)) {
             notify(notificationId, builder.build())
         }

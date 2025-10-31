@@ -15,7 +15,6 @@ import com.google.firebase.database.ValueEventListener
 class MonitoringRuanganActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMonitoringRuanganBinding
     private lateinit var firebase: FirebaseDatabase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMonitoringRuanganBinding.inflate(layoutInflater)
@@ -26,10 +25,8 @@ class MonitoringRuanganActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         firebase = FirebaseDatabase.getInstance()
         setupFirebaseListener()
-
         binding.btnBack.setOnClickListener {
             finish()
         }
@@ -42,8 +39,6 @@ class MonitoringRuanganActivity : AppCompatActivity() {
                     try {
                         android.util.Log.d("FirebaseData", "Lingkungan Snapshot exists: ${snapshot.exists()}")
                         android.util.Log.d("FirebaseData", "Lingkungan Full data: ${snapshot.value}")
-
-                        // Get temperature
                         val suhuRaw = snapshot.child("suhu").value
                         val suhu = when (suhuRaw) {
                             is Double -> suhuRaw
@@ -53,8 +48,6 @@ class MonitoringRuanganActivity : AppCompatActivity() {
                             is String -> suhuRaw.toDoubleOrNull() ?: 0.0
                             else -> 0.0
                         }
-
-                        // Get humidity
                         val kelembabanRaw = snapshot.child("kelembapan").value
                         val kelembaban = when (kelembabanRaw) {
                             is Double -> kelembabanRaw
@@ -64,14 +57,10 @@ class MonitoringRuanganActivity : AppCompatActivity() {
                             is String -> kelembabanRaw.toDoubleOrNull() ?: 0.0
                             else -> 0.0
                         }
-
                         val status = snapshot.child("status").getValue(String::class.java) ?: "NORMAL"
-
                         android.util.Log.d("FirebaseData", "Suhu: $suhu, Kelembaban: $kelembaban, Status: $status")
-
                         updateTemperatureUI(suhu)
                         updateHumidityUI(kelembaban)
-
                     } catch (e: Exception) {
                         android.util.Log.e("FirebaseError", "Error processing Lingkungan data", e)
                         e.printStackTrace()
@@ -79,7 +68,6 @@ class MonitoringRuanganActivity : AppCompatActivity() {
                         updateHumidityUI(0.0)
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     android.util.Log.e("FirebaseError", "Database error: ${error.message}")
                     updateTemperatureUI(0.0)
@@ -90,13 +78,11 @@ class MonitoringRuanganActivity : AppCompatActivity() {
 
     private fun updateTemperatureUI(suhu: Double) {
         val suhuText = findViewById<TextView>(R.id.tv_temperature)
-        // Format to 0 decimal place
         suhuText.text = String.format("%.0f", suhu)
     }
 
     private fun updateHumidityUI(kelembaban: Double) {
         val kelembabanText = findViewById<TextView>(R.id.tv_humidity)
-        // Format to 0 decimal place
         kelembabanText.text = String.format("%.0f", kelembaban)
     }
 }

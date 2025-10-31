@@ -82,7 +82,6 @@ class MonitoringTandonAirActivity : AppCompatActivity() {
                         updateWaterLevelUI(0.0)
                     }
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     android.util.Log.e("FirebaseError", "Database error: ${error.message}")
                     updateWaterLevelUI(0.0)

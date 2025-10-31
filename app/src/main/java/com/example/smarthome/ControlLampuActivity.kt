@@ -31,14 +31,6 @@ class ControlLampuActivity : AppCompatActivity() {
         private const val KEY_LAMPU_3 = "lampu_3"
         private const val KEY_LAMPU_4 = "lampu_4"
         private const val KEY_LAMPU_5 = "lampu_5"
-        private const val KEY_LAMPU_6 = "lampu_6"
-        private const val KEY_LAMPU_7 = "lampu_7"
-        private const val KEY_LAMPU_8 = "lampu_8"
-        private const val KEY_LAMPU_9 = "lampu_9"
-        private const val KEY_LAMPU_10 = "lampu_10"
-        private const val KEY_LAMPU_11 = "lampu_11"
-        private const val KEY_LAMPU_12 = "lampu_12"
-        private const val KEY_LAMPU_13 = "lampu_13"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,14 +65,6 @@ class ControlLampuActivity : AppCompatActivity() {
                         updateLampFromFirebase(snapshot, "Lampu3", R.id.lampu_3, R.id.toggle_lampu_3)
                         updateLampFromFirebase(snapshot, "Lampu4", R.id.lampu_4, R.id.toggle_lampu_4)
                         updateLampFromFirebase(snapshot, "Lampu5", R.id.lampu_5, R.id.toggle_lampu_5)
-                        updateLampFromFirebase(snapshot, "Lampu6", R.id.lampu_6, R.id.toggle_lampu_6)
-                        updateLampFromFirebase(snapshot, "Lampu7", R.id.lampu_7, R.id.toggle_lampu_7)
-                        updateLampFromFirebase(snapshot, "Lampu8", R.id.lampu_8, R.id.toggle_lampu_8)
-                        updateLampFromFirebase(snapshot, "Lampu9", R.id.lampu_9, R.id.toggle_lampu_9)
-                        updateLampFromFirebase(snapshot, "Lampu10", R.id.lampu_10, R.id.toggle_lampu_10)
-                        updateLampFromFirebase(snapshot, "Lampu11", R.id.lampu_11, R.id.toggle_lampu_11)
-                        updateLampFromFirebase(snapshot, "Lampu12", R.id.lampu_12, R.id.toggle_lampu_12)
-                        updateLampFromFirebase(snapshot, "Lampu13", R.id.lampu_13, R.id.toggle_lampu_13)
                         updateSemuaRuanganStatus(snapshot)
                     } catch (e: Exception) {
                         android.util.Log.e("FirebaseError", "Error processing lamp data", e)
@@ -108,7 +92,7 @@ class ControlLampuActivity : AppCompatActivity() {
     private fun updateSemuaRuanganStatus(snapshot: DataSnapshot) {
         var allOn = true
         var allOff = true
-        for (i in 1..13) {
+        for (i in 1..5) {
             val lampKey = "Lampu$i"
             val status = snapshot.child(lampKey).child("status").getValue(String::class.java) ?: "OFF"
             if (status.equals("ON", ignoreCase = true)) {
@@ -140,7 +124,7 @@ class ControlLampuActivity : AppCompatActivity() {
 
     private fun updateAllFirebaseLampStatus(isOn: Boolean) {
         val status = if (isOn) "ON" else "OFF"
-        for (i in 1..13) {
+        for (i in 1..5) {
             val lampKey = "Lampu$i"
             firebase.reference.child("IoTSystem").child("Lampu").child(lampKey).child("status").setValue(status)
         }
@@ -164,30 +148,6 @@ class ControlLampuActivity : AppCompatActivity() {
         }
         findViewById<LinearLayout>(R.id.toggle_lampu_5).setOnClickListener {
             toggleLampWithAnimation(R.id.lampu_5, R.id.toggle_lampu_5, 5)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_6).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_6, R.id.toggle_lampu_6, 6)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_7).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_7, R.id.toggle_lampu_7, 7)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_8).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_8, R.id.toggle_lampu_8, 8)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_9).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_9, R.id.toggle_lampu_9, 9)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_10).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_10, R.id.toggle_lampu_10, 10)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_11).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_11, R.id.toggle_lampu_11, 11)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_12).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_12, R.id.toggle_lampu_12, 12)
-        }
-        findViewById<LinearLayout>(R.id.toggle_lampu_13).setOnClickListener {
-            toggleLampWithAnimation(R.id.lampu_13, R.id.toggle_lampu_13, 13)
         }
     }
 
@@ -338,15 +298,7 @@ class ControlLampuActivity : AppCompatActivity() {
             R.id.lampu_2 to R.id.toggle_lampu_2,
             R.id.lampu_3 to R.id.toggle_lampu_3,
             R.id.lampu_4 to R.id.toggle_lampu_4,
-            R.id.lampu_5 to R.id.toggle_lampu_5,
-            R.id.lampu_6 to R.id.toggle_lampu_6,
-            R.id.lampu_7 to R.id.toggle_lampu_7,
-            R.id.lampu_8 to R.id.toggle_lampu_8,
-            R.id.lampu_9 to R.id.toggle_lampu_9,
-            R.id.lampu_10 to R.id.toggle_lampu_10,
-            R.id.lampu_11 to R.id.toggle_lampu_11,
-            R.id.lampu_12 to R.id.toggle_lampu_12,
-            R.id.lampu_13 to R.id.toggle_lampu_13
+            R.id.lampu_5 to R.id.toggle_lampu_5
         )
         lampIds.forEach { (lampId, toggleId) ->
             val isOn = sharedPreferences.getBoolean(getKeyForLamp(lampId), false)
@@ -429,14 +381,6 @@ class ControlLampuActivity : AppCompatActivity() {
             R.id.lampu_3 -> KEY_LAMPU_3
             R.id.lampu_4 -> KEY_LAMPU_4
             R.id.lampu_5 -> KEY_LAMPU_5
-            R.id.lampu_6 -> KEY_LAMPU_6
-            R.id.lampu_7 -> KEY_LAMPU_7
-            R.id.lampu_8 -> KEY_LAMPU_8
-            R.id.lampu_9 -> KEY_LAMPU_9
-            R.id.lampu_10 -> KEY_LAMPU_10
-            R.id.lampu_11 -> KEY_LAMPU_11
-            R.id.lampu_12 -> KEY_LAMPU_12
-            R.id.lampu_13 -> KEY_LAMPU_13
             else -> ""
         }
     }
@@ -491,15 +435,7 @@ class ControlLampuActivity : AppCompatActivity() {
             R.id.lampu_2 to R.id.toggle_lampu_2,
             R.id.lampu_3 to R.id.toggle_lampu_3,
             R.id.lampu_4 to R.id.toggle_lampu_4,
-            R.id.lampu_5 to R.id.toggle_lampu_5,
-            R.id.lampu_6 to R.id.toggle_lampu_6,
-            R.id.lampu_7 to R.id.toggle_lampu_7,
-            R.id.lampu_8 to R.id.toggle_lampu_8,
-            R.id.lampu_9 to R.id.toggle_lampu_9,
-            R.id.lampu_10 to R.id.toggle_lampu_10,
-            R.id.lampu_11 to R.id.toggle_lampu_11,
-            R.id.lampu_12 to R.id.toggle_lampu_12,
-            R.id.lampu_13 to R.id.toggle_lampu_13
+            R.id.lampu_5 to R.id.toggle_lampu_5
         )
         lampIds.forEach { (lampId, toggleId) ->
             setToggleToOffState(lampId, toggleId)
@@ -513,15 +449,7 @@ class ControlLampuActivity : AppCompatActivity() {
             R.id.lampu_2 to R.id.toggle_lampu_2,
             R.id.lampu_3 to R.id.toggle_lampu_3,
             R.id.lampu_4 to R.id.toggle_lampu_4,
-            R.id.lampu_5 to R.id.toggle_lampu_5,
-            R.id.lampu_6 to R.id.toggle_lampu_6,
-            R.id.lampu_7 to R.id.toggle_lampu_7,
-            R.id.lampu_8 to R.id.toggle_lampu_8,
-            R.id.lampu_9 to R.id.toggle_lampu_9,
-            R.id.lampu_10 to R.id.toggle_lampu_10,
-            R.id.lampu_11 to R.id.toggle_lampu_11,
-            R.id.lampu_12 to R.id.toggle_lampu_12,
-            R.id.lampu_13 to R.id.toggle_lampu_13
+            R.id.lampu_5 to R.id.toggle_lampu_5
         )
         lampIds.forEach { (lampId, toggleId) ->
             setToggleToOnState(lampId, toggleId)
@@ -533,8 +461,7 @@ class ControlLampuActivity : AppCompatActivity() {
         val toggleIds = arrayOf(
             R.id.toggle_semua_ruangan,
             R.id.toggle_lampu_1, R.id.toggle_lampu_2, R.id.toggle_lampu_3, R.id.toggle_lampu_4,
-            R.id.toggle_lampu_5, R.id.toggle_lampu_6, R.id.toggle_lampu_7, R.id.toggle_lampu_8,
-            R.id.toggle_lampu_9, R.id.toggle_lampu_10, R.id.toggle_lampu_11, R.id.toggle_lampu_12, R.id.toggle_lampu_13
+            R.id.toggle_lampu_5
         )
         toggleIds.forEach { toggleId ->
             findViewById<LinearLayout>(toggleId).isEnabled = !disable

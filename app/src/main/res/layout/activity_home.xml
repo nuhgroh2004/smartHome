@@ -60,7 +60,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
 
-                android:src="@drawable/home_profile_img"
+                android:src="@drawable/baseline_account_circle_24"
                 android:layout_marginEnd="16dp" />
 
             <!-- Text Section -->
@@ -73,7 +73,7 @@
                     android:id="@+id/greetingText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hi, Bahlil"
+                    android:text="Hi, John Doe"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="#2C3E50"

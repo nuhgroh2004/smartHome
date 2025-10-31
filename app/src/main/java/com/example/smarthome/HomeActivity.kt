@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -17,10 +16,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.smarthome.databinding.ActivityHomeBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import android.view.View
 import android.animation.ObjectAnimator
 import android.animation.AnimatorSet
@@ -29,7 +24,6 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
     private lateinit var binding: ActivityHomeBinding
     private var doubleBackToExitPressedOnce = false
 
-    private lateinit var firebase:FirebaseDatabase
     // Add dispatcher callback reference
     private lateinit var backPressedCallback: OnBackPressedCallback
     private lateinit var notificationDb: NotificationDatabase
@@ -83,18 +77,6 @@ class HomeActivity : AppCompatActivity(), NotificationDatabase.OnNotificationCha
         }
         onBackPressedDispatcher.addCallback(this, backPressedCallback)
 
-        firebase = FirebaseDatabase.getInstance()
-        firebase.reference.child("data").addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val textView = findViewById<TextView>(R.id.greetingText)
-                textView.text = snapshot.value.toString()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
 
         /* ------------------------ fungsional untuk tombol berpidah activity -------------------------- */
         binding.cardLampu.setOnClickListener {
